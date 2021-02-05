@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/default">
+
+<style layout:fragment="style">
+/* CSS Start !! */
+
+    #data-table tr:hover {
+        background-color: rgb(248, 248, 248);
+        cursor: pointer;
+    }
+
+</style>
+
+<div layout:fragment="content">
+<!-- HTML Start !! -->
+
+    <table class="table table-sm table-bordered text-center" id="data-table">
+        <thead class="thead-dark">
+            <tr>
+                <th style="width: 50px;">No</th>
+                <th style="width: 200px;">ID</th>
+                <th style="width: 200px;">Name</th>
+                <th style="width: 200px;">Date</th>
+                <th style="width: 200px;">Role</th>
+                <th style="width: 50px;">Revoke</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+
+</div>
+
+<script layout:fragment="script">
+// JS Start !!
+$(()=>{
+// script start
+
+    const $table = $("#page #data-table");
+    let userNo;
+
+    setModal('delete','delete','deleteModal');
+
+    $("#deleteModal #modal-ok").on("click", ()=>{
+        revokeAccount();
+    });
+
+    getUserList();
+
+    function getUserList(){
+
+        let param = {
+            keyword : "",
+            cPage : 1
+        };
+
+        $.ajax({
+            url : "/api/admin/user",
+            type : "get",
+            dataType : "json",
+            data : param,
+            success: (data) => {
+
+                let html = "";
+
+                data.forEach(e => {
+                    html += '<tr><input type="hidden" class="userNo" value="' + e.user_no + '">';
+                    html += '<td>' + e.user_no + '</td>';
+                    html += '<td>' + e.user_id + '</td>';
+                    html += '<td>' + e.user_name + '</td>';
+                    html += '<td>' + e.reg_date + '</td>';
+                    html += '<td><button class="btn btn-outline-info btn-sm authBtn btn-block">Search Role</button></td>';
+                    html += '<td><button class="btn btn-danger btn-sm btn-block revokeBtn" data-toggle="modal" data-target="#deleteModal" >Delete</button></td>'
+                    html += '</tr>';
+                });
+
+                $table.children("tbody").html(html);
+
+                $table.find(".authBtn").on("click", (e)=>{
+                    getUserAuth(e);
+                });
+
+                $table.find(".revokeBtn").on("click", (e)=>{
+                    userNo = $(e.target).parents("tr").find("input[type='hidden']").val();
+                });
+
+            },
+            complete: () => {
+
+            },
+            error: (e, x, c) => {
+                console.log(e,x,c);
+            }
+
+        });
+    }
+
+    function getUserAuth(e){
+
+        var $e = $(e.target);
+        var userNo = $e.parents("tr").find("input[type='hidden']").val();
+
+        var param = {
+            userNo : userNo,
+        };
+
+        $.ajax({
+            url : "/api/admin/auth/" + userNo,
+            type : "get",
+            dataType : "json",
+            // data : param,
+            success: (data) => {
+                
+                var html = ""
+                html += '<div class="btn-group">';
+
+                data.forEach(e => {
+                    var authCode = e.auth_code.replace('ROLE_','');
+                    html += '<span class="badge badge-success">[ ' + authCode + ' ]</span>';
+                });
+
+                html += '</div>';
+                $e.parent("td").html(html);
+
+            },
+            complete: () => {
+
+            },
+            error: (e, x, c) => {
+                console.log(e,x,c);
+            }
+
+        });
+    }
+
+    function revokeAccount() {
+
+        $.ajax({
+            url: "/api/admin/user/" + userNo,
+            contentType: "application/x-www-form-urlencoded",
+            type: "post",
+            dataType: "json",
+            data: {"_method":"delete"},
+            success: () => {
+                getUserList();
+            },
+            complete: () => {
+
+            },
+            error: (e) => {
+
+                var status = e.status
+
+                if(status == '403')
+                    msgModal("Error", "해당 서비스에 권한이 없습니다.");
+
+                else
+                    msgModal("Error", "서버 오류");
+
+            }
+        });
+    }
+});
+</script>
+
+</html>

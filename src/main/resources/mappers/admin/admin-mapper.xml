@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="admin">
+<!-- ##################################################### -->
+<!-- 						SELECT 						   -->
+<!-- ##################################################### -->
+
+	<select id="countRole" parameterType="map" resultType="_int">
+		SELECT 
+			COUNT(*)
+		FROM 
+			TB_AUTH
+		WHERE 
+			USER_NO = #{userNo} AND AUTH_CODE = #{role}
+	</select>
+
+	<select id="searchUserByKeyword" parameterType="map" resultType="map">
+		
+		SELECT
+			user_no, 
+			user_id, 
+			user_name, 
+			date_format(reg_date, '%Y-%m-%d %H:%i:%s') as reg_date
+		FROM
+			tb_user
+		WHERE 
+			status = 'T' and
+			( user_id like '%${keyword}%' or user_name like '%${keyword}%' )
+		ORDER BY reg_date DESC
+	</select>
+
+	<select id="selectAllAuthByNo" parameterType="_long" resultType="map">
+		
+		SELECT
+			idx, auth_code
+		FROM
+			tb_auth
+		WHERE
+			user_no = #{userNo}
+		ORDER BY auth_code ASC
+	</select>
+
+<!-- ##################################################### -->
+<!-- 						INSERT 						   -->
+<!-- ##################################################### -->
+
+	<insert id="insertAuth" parameterType="map">
+		INSERT INTO TB_AUTH ( USER_NO,
+							  AUTH_CODE )
+		VALUES ( #{userNo},
+			     #{role} )
+	</insert>
+
+<!-- ##################################################### -->
+<!-- 						UPDATE 						   -->
+<!-- ##################################################### -->
+
+	<update id="deleteUserByNo" parameterType="_long">
+	
+		UPDATE tb_user
+		SET status = 'N'
+		WHERE user_no = #{userNo}
+	
+	</update>
+
+<!-- ##################################################### -->
+<!-- 						DELETE 						   -->
+<!-- ##################################################### -->
+
+	<delete id="deleteAuth" parameterType="map">
+		DELETE 
+		FROM TB_AUTH
+		WHERE USER_NO = #{userNo}
+			  AND AUTH_CODE = #{role}
+	</delete>
+
+
+</mapper>

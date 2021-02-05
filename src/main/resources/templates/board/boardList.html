@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/default">
+
+<style layout:fragment="style">
+/* CSS Start !! */
+    #dataTable tr:hover {
+        background-color: rgb(248, 248, 248);
+        cursor: pointer;
+    }
+</style>
+
+<div layout:fragment="content">
+<!-- HTML Start !! -->
+
+    <table class="table table-sm table-bordered text-center" id="dataTable">
+        <thead class="thead-dark">
+            <tr>
+                <th style="width: 50px;">No</th>
+                <th style="width: 400px;">Title</th>
+                <th style="width: 100px;">Writer</th>
+                <th style="width: 100px;">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    <div id="pageBar"></div>
+
+</div>
+
+<script layout:fragment="script">
+// JS Start !!
+$(()=>{
+// script start
+
+    var cPage = 1;
+    var keyword = '';
+
+    getBoardList();
+
+    function getBoardList(){
+        var data = {
+            cPage : cPage,
+            keyword : keyword
+        };
+
+        $.ajax({
+            url: "/api/board/list",
+            type: "GET",  
+            dataType: "json",
+            data: data,
+            success: (data) => {
+                // 요청 완료
+
+                var html = '';
+
+                data.list.forEach(i => {
+                    html += '<tr>';
+                    html += '<input type="hidden" value="' + i.board_no + '">';
+                    html += '<td>' + i.board_no + '</td>';
+                    html += '<td>' + i.title + '</td>';
+                    html += '<td>' + i.user_name + '</td>';
+                    html += '<td>' + i.write_date + '</td>';
+                    html += '</tr>'
+                });
+
+                $("#dataTable tbody").html(html);
+                $("#pageBar").html(data.pageBar);
+
+                $("#pageBar li").on("click", (e)=>{
+                    pagination(e);
+                })
+
+                $("#dataTable tbody tr").on("click", (e)=>{
+
+                    var boardNo = $(e.target).parent("tr").find("input").val();
+                    location.href = '/board/view/' + boardNo;
+
+                });
+            },
+            complete: () => {
+
+                
+            },
+            error: (e) => {
+                // 요청 실패
+
+                var status = e.status
+                console.log(e.status);
+            }
+        });
+    }
+
+    function pagination(e){
+
+        var page = $(e.target).siblings("input[type=hidden]").val()
+        
+        if(page !== undefined){
+            cPage = page;
+            getBoardList();
+        }
+
+    }
+
+});
+</script>
+
+</html>

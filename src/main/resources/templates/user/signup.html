@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/default">
+
+<style layout:fragment="style">
+/* CSS Start !! */
+
+#page{
+    width: 400px;
+}
+
+
+</style>
+
+<div layout:fragment="content">
+<!-- HTML Start !! -->
+
+    <div class="form-group">
+        <label for="userId">ID:</label>
+        <input type="text" class="form-control" id="userId">
+    </div>
+    <div class="form-group">
+        <label for="userName">Name:</label>
+        <input type="text" class="form-control" id="userName">
+    </div>
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" class="form-control" id="password">
+    </div>
+    <div class="form-group">
+        <label for="password">Password Check:</label>
+        <input type="password" class="form-control" id="password-ck">
+    </div>
+    <div class="form-group">
+        <br>
+        <input type="button" id="btn-submit" value="Sing in" class="btn btn-block btn-dark">
+    </div>
+
+</div>
+
+<script layout:fragment="script">
+// JS Start !!
+$(()=>{
+    
+    $("#btn-submit").click(()=>{
+        
+        var userId = $("#page #userId").val();
+        var userName = $("#page #userName").val();
+        var password = $("#page #password").val();
+        var passwordCk = $("#page #password-ck").val();
+
+        if(password !== passwordCk){
+            msgModal("Error","서로 다른 비밀번호");
+            return;
+        }
+
+        var formData = new FormData();
+
+        var form = {
+            userId : userId,
+            userName : userName,
+            password : password
+        }
+
+        console.log(form);
+
+        $.ajax({
+
+            url : "/api/user/signup",
+            type : "post",
+            dataType : "json",
+            data : form,
+            success : (data)=>{
+                console.log(data);
+                location.replace('/');
+            },
+            complete : ()=>{
+            },
+            error : (e,x,c)=>{
+                console.log(e,x,c);
+                
+                msgModal("Error", "회원가입 실패");
+            }
+
+        });
+    });
+});
+</script>
+
+</html>

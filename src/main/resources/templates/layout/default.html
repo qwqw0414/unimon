@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unimon</title>
+
+    <th:block th:replace="fragments/head.html :: head"></th:block>
+    <style layout:fragment="style"></style>
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header th:replace="fragments/header.html :: header"></header>
+
+    <!-- CONTENTS -->
+    <div class="container" id="contents">
+        <div layout:fragment="content" id="page"></div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer th:replace="fragments/footer.html :: footer"></footer>
+
+    <!-- JAVA SCRIPT -->
+    <script layout:fragment="script"></script>
+</body>
+
+</html>

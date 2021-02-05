@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="user">
+
+
+<!-- ##################################################### -->
+<!-- 						SELECT 						   -->
+<!-- ##################################################### -->
+
+	<select id="countAccountById" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		FROM TB_USER
+		WHERE STATUS = 'T'
+			  AND USER_ID = #{userId}
+	</select>
+	
+	<select id="selectOneUserById" parameterType="string" resultType="Account">
+		SELECT USER_NO as userNo, 
+			   USER_ID as userId, 
+			   USER_NAME as userName, 
+			   PASSWORD, 
+			   REG_DATE as regDate
+		FROM TB_USER 
+		WHERE STATUS = 'T' 
+			  AND USER_ID = #{userId}
+	</select>
+
+	<select id="selectAllAuthByNo" parameterType="_long" resultType="string">
+		SELECT AUTH_CODE 
+		FROM TB_AUTH 
+		WHERE USER_NO = #{userNo}
+	</select>
+
+<!-- ##################################################### -->
+<!-- 						INSERT 						   -->
+<!-- ##################################################### -->
+
+	<insert id="insertUser" parameterType="Account">
+		INSERT INTO TB_USER ( USER_ID,
+							  USER_NAME,
+							  PASSWORD )
+		VALUES ( #{userId},
+			     #{userName},
+			     #{password} )			 
+	</insert>
+
+	<insert id="insertAuthUser" parameterType="Account">
+	    <selectKey resultType="_long" keyProperty="userNo" order="BEFORE">
+        	SELECT USER_NO FROM TB_USER WHERE STATUS = 'T' AND USER_ID = #{userId}   
+    	</selectKey>    
+	
+		INSERT INTO TB_AUTH ( USER_NO,
+							  AUTH_CODE )
+		VALUES ( #{userNo},
+			     'ROLE_USER' )
+	</insert>
+
+<!-- ##################################################### -->
+<!-- 						UPDATE 						   -->
+<!-- ##################################################### -->
+
+
+
+<!-- ##################################################### -->
+<!-- 						DELETE 						   -->
+<!-- ##################################################### -->
+
+
+
+
+
+
+</mapper>

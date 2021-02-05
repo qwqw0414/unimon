@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/default">
+
+<style layout:fragment="style">
+/* CSS Start !! */
+    #page{
+        width: 800px;
+    }
+</style>
+
+<div layout:fragment="content">
+<!-- HTML Start !! -->
+
+    <div class="row">
+        <div class="col-10">
+            <input type="text" id="boardTitle" class="form-control" placeholder="Title">
+        </div>
+        <div class="col-2">
+            <button class="btn btn-outline-dark btn-block" id="btnWrite">작성 완료</button>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col">
+            <div id="writeBoard"></div>
+        </div>
+    </div>
+
+</div>
+
+<script layout:fragment="script">
+// JS Start !!
+$(()=>{
+// script start
+
+    var $btnWrite = $("#page #btnWrite");
+    var $title = $("#page #boardTitle");
+    var $writeBoard = $("#page #writeBoard");
+
+    // Set Modal
+    setModal("작성 확인","DEC","writeModal");
+
+    // $btnWrite.on("click", () => { showModal("writeModal") });
+
+
+    $btnWrite.on("click", ()=>{
+        var title = $title.val();
+        var contents = $writeBoard.summernote('code');
+
+        if(title.length == 0 ){
+            msgModal("확인","글제목");
+            return;
+        }
+        if(contents == '<p><br></p>'){
+            msgModal("확인","글내용");
+            return;
+        }
+
+        showModal("writeModal");
+    });
+
+    $("#writeModal #modal-ok").on("click",()=>{
+        boardWrite($title.val(), $writeBoard.summernote('code'));
+    });
+
+    $writeBoard.summernote({
+        height: 300,                 // 에디터 높이
+        minHeight: 300,             // 최소 높이
+        maxHeight: 600,             // 최대 높이
+        focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
+        lang: "ko-KR",					// 한글 설정
+        placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
+    });
+
+    function boardWrite(title , contents){
+
+        var data = {
+            // _method : 'post',
+            title : title,
+            contents : contents
+        };
+
+        $.ajax({
+            url: "/api/board/write",
+            contentType: "application/x-www-form-urlencoded",
+            type: "post",   // 고정 data에서 _method로 요청
+            dataType: "json",
+            data: data,
+            success: () => {
+                // 요청 완료
+                location.replace('/board/list');
+            },
+            complete: () => {
+
+                
+            },
+            error: (e) => {
+                // 요청 실패
+
+                var status = e.status
+                console.log(e.status);
+            }
+        });
+    }
+
+});
+</script>
+
+</html>

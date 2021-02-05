@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/default">
+
+<style layout:fragment="style">
+    /* CSS Start !! */
+</style>
+
+<div layout:fragment="content" class="text-center">
+    <!-- HTML Start !! -->
+
+    <div class="spinner-grow text-muted"></div>
+    <div class="spinner-grow text-primary"></div>
+    <div class="spinner-grow text-success"></div>
+    <div class="spinner-grow text-info"></div>
+    <div class="spinner-grow text-warning"></div>
+    <div class="spinner-grow text-danger"></div>
+    <div class="spinner-grow text-secondary"></div>
+    <div class="spinner-grow text-dark"></div>
+    <div class="spinner-grow text-light"></div>
+    <h1>Error Page</h1>
+    <h3 th:text="${errorStatus}"></h3>
+    <h3 th:text="${errorCode}"></h3>
+    <div class="spinner-grow text-muted"></div>
+    <div class="spinner-grow text-primary"></div>
+    <div class="spinner-grow text-success"></div>
+    <div class="spinner-grow text-info"></div>
+    <div class="spinner-grow text-warning"></div>
+    <div class="spinner-grow text-danger"></div>
+    <div class="spinner-grow text-secondary"></div>
+    <div class="spinner-grow text-dark"></div>
+    <div class="spinner-grow text-light"></div>
+    <br>
+    <br>
+    <br>
+    <div class="form-group">
+        <button id="btn-home" class="btn btn-outline-info">Home</button>
+    </div>
+
+</div>
+
+<script layout:fragment="script">
+
+// JS Start !!
+    const errorCode = '${errorCode}';
+
+    $("#page #btn-home").click(() => {
+        location.replace('/');
+    });
+
+</script>
+
+</html>

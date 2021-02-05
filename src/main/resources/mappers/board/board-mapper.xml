@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+
+<!-- ##################################################### -->
+<!-- 						SELECT 						   -->
+<!-- ##################################################### -->
+
+	<select id="selectOneBoardByNo" parameterType="_long" resultType="map">
+	
+		select u.user_name,
+			   b.board_no,
+			   b.user_no,
+			   b.title,
+			   b.contents,
+			   b.attachment_cnt,
+			   date_format(b.write_date, '%Y-%m-%d %H:%i:%s') as write_date
+		from tb_board b join tb_user u on b.user_no = u.user_no 
+		WHERE b.status = 'T' AND  b.board_no = #{userNo}
+	
+	</select>
+	
+	<select id="searchBoardByKeyword" parameterType="map" resultType="map">
+		SELECT b.board_no,
+			   u.user_name,
+			   b.user_no,
+			   b.title,
+			   b.attachment_cnt,
+			   date_format(b.write_date, '%Y-%m-%d %H:%i:%s') as write_date
+		FROM tb_board b JOIN tb_user u ON b.user_no = u.user_no 
+		WHERE b.status = 'T' 
+			  AND  b.title LIKE '%${keyword}%'
+		ORDER BY b.board_no DESC
+	</select>
+
+	<select id="countBoardByKeyword" parameterType="map" resultType="_int">
+		SELECT COUNT(*)
+		FROM tb_board
+		WHERE status = 'T' 
+			  AND title LIKE '%${keyword}%'
+	</select>
+
+<!-- ##################################################### -->
+<!-- 						INSERT 						   -->
+<!-- ##################################################### -->
+
+	<insert id="insertBoard" parameterType="map">
+
+		insert into tb_board (user_no, title, contents, attachment_cnt)
+		values ( #{userNo}, #{title}, #{contents}, #{attachment_cnt} )
+		
+	</insert>
+
+
+<!-- ##################################################### -->
+<!-- 						UPDATE 						   -->
+<!-- ##################################################### -->
+	
+	<update id="deleteBoardByNo" parameterType="_long">
+	
+		UPDATE tb_board SET status = 'F' 
+		WHERE board_no = #{boardNo}
+	
+	</update>
+
+
+<!-- ##################################################### -->
+<!-- 						DELETE 						   -->
+<!-- ##################################################### -->
+
+
+</mapper>
