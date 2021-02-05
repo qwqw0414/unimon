@@ -3,25 +3,47 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Unimon</title>
 
     <th:block th:replace="fragments/head.html :: head"></th:block>
     <style layout:fragment="style"></style>
 </head>
 
-<body>
-    <!-- HEADER -->
-    <header th:replace="fragments/header.html :: header"></header>
+<body id="page-top">
 
-    <!-- CONTENTS -->
-    <div class="container" id="contents">
-        <div layout:fragment="content" id="page"></div>
+    <div id="modalContents"></div>
+
+    <div id="wrapper">
+        
+        <!-- Sidebar -->
+        <th:block th:replace="fragments/sidebar.html :: sidebar"></th:block>
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+                
+                <!-- Topbar -->
+                <th:block th:replace="fragments/header.html :: header"></th:block>
+                
+                <!-- Begin Page Content -->
+                <th:block layout:fragment="content"></th:block>
+
+            </div>
+
+            <!-- Footer -->
+            <th:block th:replace="fragments/footer.html :: footer"></th:block>
+
+        </div>
+
     </div>
 
-    <!-- FOOTER -->
-    <footer th:replace="fragments/footer.html :: footer"></footer>
+    <!-- SCRIPT SRC -->
+    <th:block th:replace="fragments/src.html :: src"></th:block>
 
     <!-- JAVA SCRIPT -->
     <script layout:fragment="script"></script>

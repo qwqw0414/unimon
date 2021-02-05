@@ -3,50 +3,33 @@
     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/default">
 
 <style layout:fragment="style">
-    /* CSS Start !! */
+/* CSS Start !! */
+
+    .error{
+        margin-top: 200px;
+    }
+
 </style>
 
-<div layout:fragment="content" class="text-center">
+<div layout:fragment="content" class="container-fluid text-center">
     <!-- HTML Start !! -->
 
-    <div class="spinner-grow text-muted"></div>
-    <div class="spinner-grow text-primary"></div>
-    <div class="spinner-grow text-success"></div>
-    <div class="spinner-grow text-info"></div>
-    <div class="spinner-grow text-warning"></div>
-    <div class="spinner-grow text-danger"></div>
-    <div class="spinner-grow text-secondary"></div>
-    <div class="spinner-grow text-dark"></div>
-    <div class="spinner-grow text-light"></div>
-    <h1>Error Page</h1>
-    <h3 th:text="${errorStatus}"></h3>
-    <h3 th:text="${errorCode}"></h3>
-    <div class="spinner-grow text-muted"></div>
-    <div class="spinner-grow text-primary"></div>
-    <div class="spinner-grow text-success"></div>
-    <div class="spinner-grow text-info"></div>
-    <div class="spinner-grow text-warning"></div>
-    <div class="spinner-grow text-danger"></div>
-    <div class="spinner-grow text-secondary"></div>
-    <div class="spinner-grow text-dark"></div>
-    <div class="spinner-grow text-light"></div>
-    <br>
-    <br>
-    <br>
-    <div class="form-group">
-        <button id="btn-home" class="btn btn-outline-info">Home</button>
+    <div class="row">
+        <div class="col-lg-12 mb-4">
+            <div class="text-center">
+                <div class="error mx-auto" data-text="404">404</div>
+                <p class="lead text-gray-800 mb-5">Page Not Found</p>
+                <p class="text-gray-500 mb-0">It looks like you found a glitch in the matrix...</p>
+                <a th:href="@{/}">&larr; Back to Home</a>
+            </div>
+        </div>
     </div>
 
 </div>
 
 <script layout:fragment="script">
-
 // JS Start !!
-    const errorCode = '${errorCode}';
 
-    $("#page #btn-home").click(() => {
-        location.replace('/');
-    });
 
 </script>
 

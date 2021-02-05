@@ -21,6 +21,11 @@ public class PublicController {
 		return "main/main";
 	}
 
+	@RequestMapping(value = "/boot")
+	public String themView() throws Exception {
+		return "boot";
+	}
+	
 	@RequestMapping(value = "/test/error", method = RequestMethod.GET)
 	public String error() throws Exception {
 		throw new Exception();
