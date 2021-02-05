@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Unimon</title>
+
+    <th:block th:replace="fragments/head.html :: head"></th:block>
+    <style layout:fragment="style"></style>
+</head>
+
+<body class="bg-gradient-dark">
+
+    <div id="modalContents"></div>
+
+    <div class="container">
+
+        <!-- Begin Page Content -->
+        <th:block layout:fragment="content"></th:block>
+
+    </div>
+
+    <!-- SCRIPT SRC -->
+    <th:block th:replace="fragments/src.html :: src"></th:block>
+
+    <!-- JAVA SCRIPT -->
+    <script layout:fragment="script"></script>
+</body>
+
+</html>

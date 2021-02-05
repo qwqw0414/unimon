@@ -41,7 +41,7 @@ public class ExceptionController {
 		log.error(e.getMessage());
 		e.printStackTrace();
 
-		return "common/error";
+		return "error/error";
 	}
 
 //	401 사용자 인증 필요
@@ -53,7 +53,7 @@ public class ExceptionController {
 		request.setAttribute("errorStatus", HttpStatus.UNAUTHORIZED);
 		log.error(e.getMessage());
 
-		return "common/error";
+		return "error/error";
 	}
 
 //	403 서비스 이용 권한 없음
@@ -65,7 +65,7 @@ public class ExceptionController {
 		request.setAttribute("errorStatus", HttpStatus.FORBIDDEN);
 		log.error(e.getMessage());
 
-		return "common/error";
+		return "error/error";
 	}
 
 //	500 서버 오류
@@ -76,7 +76,7 @@ public class ExceptionController {
 		request.setAttribute("errorCode", "500");
 		request.setAttribute("errorStatus", HttpStatus.INTERNAL_SERVER_ERROR);
 		e.printStackTrace();
-		return "common/error";
+		return "error/error";
 	}
 
 //    @ExceptionHandler({ Exception.class })

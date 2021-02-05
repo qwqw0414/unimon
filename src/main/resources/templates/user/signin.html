@@ -11,23 +11,60 @@
 
 </style>
 
-<div layout:fragment="content">
-<!-- HTML Start !! -->
+<div layout:fragment="content" class="container-fluid">
+    <!-- HTML Start !! -->
+    
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Sign in</h1>
+        <a th:href="@{/404}" class="d-none d-sm-inline-block btn btn-sm btn-info shadow-sm">
+            <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
+        </a>
+    </div>
+    
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+        <div class="col-lg-4">
+            <div class="p-5">
+                <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">Sign in</h1>
+                </div>
 
-    <div class="form-group">
-        <label for="userId">ID:</label>
-        <input type="text" class="form-control" id="userId">
-    </div>
-    <div class="form-group">
-        <label for="password">Password:</label>
-        <input type="password" class="form-control" id="password">
-    </div>
-    <div class="form-group">
-        <br>
-        <input type="button" id="btn-submit" value="Sing in" class="btn btn-block btn-dark">
+                <form class="user">
+                    <div class="form-group">
+                        <input type="email" class="form-control form-control-user" id="exampleInputEmail"
+                            aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control form-control-user" id="exampleInputPassword"
+                            placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox small">
+                            <input type="checkbox" class="custom-control-input" id="customCheck">
+                            <label class="custom-control-label" for="customCheck">Remember Me</label>
+                        </div>
+                    </div>
+                    <a href="index.html" class="btn btn-dark btn-user btn-block">
+                        Login
+                    </a>
+                </form>
+
+                <hr>
+
+                <div class="text-center">
+                    <a class="small" th:href="@{/404}">Forgot Password?</a>
+                </div>
+                <div class="text-center">
+                    <a class="small" th:href="@{/signup}">Create an Account!</a>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>
+    
+
 
 <script layout:fragment="script">
 // JS Start !!

@@ -24,7 +24,10 @@ public class CustomErrorController implements ErrorController {
 //    	
 		String status = String.valueOf(request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE));
 		request.setAttribute("errorCode", status);
-
+		
+		if("404".equals(status))
+			request.setAttribute("errorStatus", "Page Not Found");
+		
 		log.error("Error Status Code : {}", status);
 
 //		String code = (String) request.getAttribute("errorCode");
