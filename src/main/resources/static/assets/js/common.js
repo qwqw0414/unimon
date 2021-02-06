@@ -13,30 +13,30 @@ function setModal(title, msg, id){
         html += '<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>';
     }
     else{
-        html += '<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>';
-        html += '<button type="button" id="modal-ok" class="btn btn-primary" data-dismiss="modal">확인</button>';
+        html += '<button class="btn btn-secondary" style="width:80px;" type="button" data-dismiss="modal">Cancel</button>';
+        html += '<a class="btn btn-info text-light" style="width:80px;" data-dismiss="modal" id="modal-ok">Ok</a>';
     }
 
     html += '</div></div></div></div>';
 
-    $("#modalContents").append(html);
+    $("#modal-contents").append(html);
 }
 
 function showModal(id){
-    $("#modalContents #" + id).modal();
+    $("#modal-contents #" + id).modal();
 }
 
 function msgModal(title,msg){
 
     if(title !== undefined){
-        $("#modalContents #msgModal").find(".modal-title").html(title);
+        $("#modal-contents #msgModal").find(".modal-title").html(title);
     }
 
     if(msg !== undefined){
-        $("#modalContents #msgModal").find(".modal-body").html(msg);
+        $("#modal-contents #msgModal").find(".modal-body").html(msg);
     }
 
-    $("#modalContents #msgModal").modal();
+    $("#modal-contents #msgModal").modal();
 }
 
 $(()=>{

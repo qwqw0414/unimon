@@ -49,7 +49,7 @@
             </div>
         </li>
 
-        <th:block th:if="${session.account != null}">
+        <th:block th:if="${session.account} != null">
             <!-- Nav Item - Alerts -->
             <li class="nav-item dropdown no-arrow mx-1">
                 <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
@@ -111,16 +111,15 @@
         
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
-                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="session.account.getUserName()"></span>
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small" th:text="${session.account.getUserName()}"></span>
                     <img class="img-profile rounded-circle" th:src="@{/assets/img/svg/undraw_profile.svg}">
                 </a>
                 <!-- Dropdown - User Information -->
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
         
                     <!-- 마이 페이지 -->
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" th:href="@{/user/mypage}">
                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                         Profile
                     </a>
@@ -128,7 +127,11 @@
                     <div class="dropdown-divider"></div>
         
                     <!-- 로그아웃 -->
-                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                    <!-- <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                        Logout
+                    </a> -->
+                    <a class="dropdown-item" th:href="@{/signout}">
                         <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                         Logout
                     </a>
@@ -136,8 +139,8 @@
                 </div>
             </li>
         </th:block>
-        <th:block th:else>
 
+        <th:block th:if="${session.account} == null">
             <li class="nav-item no-arrow">
                 <a class="nav-link" th:href="@{/signin}"  role="button">
                     <span class="mr-2 d-none d-lg-inline text-gray-600 small">Please log in.</span>

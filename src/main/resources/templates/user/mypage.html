@@ -10,7 +10,151 @@
 <div layout:fragment="content">
 <!-- HTML Start !! -->
 
-    <h1>mypage</h1>
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">My Information</h1>
+        <a th:href="@{/404}" class="d-none d-sm-inline-block btn btn-sm btn-info shadow-sm">
+            <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
+        </a>
+    </div>
+
+    <div class="row">
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                User ID
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${session.account.getUserId()}"></div>
+                        </div>
+
+                        <div class="col-auto">
+                            <i class="fas fa-id-badge fa-2x text-gray-300"></i>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                User Name
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${session.account.getUserName()}"></div>
+                        </div>
+
+                        <div class="col-auto">
+                            <i class="fas fa-signature fa-2x text-gray-300"></i>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                Reg Date
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${session.account.getRegDate()}"></div>
+                        </div>
+
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">My Authorization</h1>
+    </div>
+
+    <div class="row">
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-bottom-danger shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                Authorization
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">SUPER ADMIN</div>
+                        </div>
+
+                        <div class="col-auto">
+                            <i class="fas fa-mask fa-2x text-danger"></i>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-bottom-danger shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                Authorization
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">ADMIN</div>
+                        </div>
+
+                        <div class="col-auto">
+                            <i class="fas fa-user-cog fa-2x text-danger"></i>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-bottom-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                Authorization
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">USER</div>
+                        </div>
+
+                        <div class="col-auto">
+                            <i class="fas fa-user fa-2x text-info"></i>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 
 </div>
 

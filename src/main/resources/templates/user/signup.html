@@ -13,7 +13,7 @@
 </style>
 
 
-<div layout:fragment="content" class="container-fluid">
+<div layout:fragment="content">
     <!-- HTML Start !! -->
     
     <!-- Page Heading -->
@@ -24,46 +24,57 @@
         </a>
     </div>
 
-            <!-- Nested Row within Card Body -->
-            <div class="row justify-content-center">
-                <div class="col-lg-4">
-                    <div class="p-5">
-                        <div class="text-center">
-                            <h1 class="h4 text-gray-900 mb-4">Sign up</h1>
+        <div class="row justify-content-center">
+            <div class="col-lg-4">
+                <div class="p-5">
+
+                    <div class="text-center">
+                        <h1 class="h4 text-gray-900 mb-4">Sign up</h1>
+                    </div>
+
+                    <form class="user" id="signup-form">
+
+                        <!-- 아이디 -->
+                        <div class="form-group">
+                            <input type="email" class="form-control form-control-user" id="user-id" placeholder="ID">
                         </div>
-                        <form class="user">
-                            <div class="form-group">
-                                <input type="email" class="form-control form-control-user" id="exampleInputEmail"
-                                    placeholder="ID">
-                            </div>
-                            <div class="form-group">
-                                <input type="email" class="form-control form-control-user" id="exampleInputEmail"
-                                    placeholder="Name">
-                            </div>
-                            <div class="form-group row">
-                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input type="password" class="form-control form-control-user" id="exampleInputPassword"
-                                        placeholder="Password">
-                                </div>
-                                <div class="col-sm-6">
-                                    <input type="password" class="form-control form-control-user" id="exampleRepeatPassword"
-                                        placeholder="Repeat Password">
-                                </div>
-                            </div>
-                            <a href="login.html" class="btn btn-danger btn-user btn-block">
-                                Register Account
-                            </a>
-                        </form>
-                        <hr>
-                        <div class="text-center">
-                            <a class="small" th:href="@{/404}">Forgot Password?</a>
+
+                        <!-- 이름 -->
+                        <div class="form-group">
+                            <input type="email" class="form-control form-control-user" id="user-name" placeholder="Name">
                         </div>
-                        <div class="text-center">
-                            <a class="small" th:href="@{/signin}">Already have an account? Login!</a>
+
+                        <div class="form-group row">
+
+                        <!-- 비밀번호 -->
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                <input type="password" class="form-control form-control-user" id="password" placeholder="Password">
+                            </div>
+
+                        <!-- 비밀번호 확인 -->
+                            <div class="col-sm-6">
+                                <input type="password" class="form-control form-control-user" id="password-check" placeholder="Repeat Password">
+                            </div>
+
                         </div>
+
+                        <!-- 등록 버튼 -->
+                        <a class="btn btn-info btn-user btn-block text-light">
+                            Register Account
+                        </a>
+
+                    </form>
+
+                    <hr>
+                    <div class="text-center">
+                        <a class="small" th:href="@{/404}">Forgot Password?</a>
+                    </div>
+                    <div class="text-center">
+                        <a class="small" th:href="@{/signin}">Already have an account? Login!</a>
                     </div>
                 </div>
             </div>
+        </div>
 
 </div>
 
@@ -71,47 +82,50 @@
 // JS Start !!
 $(()=>{
     
-    $("#btn-submit").click(()=>{
+    const $form = $("form#signup-form");
+
+    setModal('Alert','회원가입을 진행 ?','signup-modal');
+
+    // 회원가입 요청
+    $("#signup-modal #modal-ok").on("click",()=>{
+
+        $.ajax({
+            url: "/api/user/signup",
+            type: "post",
+            dataType: "json",
+            data: {
+                userId: $form.find("#user-id").val(),
+                userName: $form.find("#user-name").val(),
+                password: $form.find("#password").val()
+            },
+            success: (data) => {
+                location.replace('/');
+            },
+            complete: () => {
+            },
+            error: (e, x, c) => {
+                console.log(e, x, c);
+                msgModal("Error Message", "회원가입 실패");
+            }
+        });
+
+    });
+
+    // 회원가입 전처리
+    $form.find("a").click(()=>{
         
-        var userId = $("#page #userId").val();
-        var userName = $("#page #userName").val();
-        var password = $("#page #password").val();
-        var passwordCk = $("#page #password-ck").val();
+        var userId = $form.find("#user-id").val();
+        var userName = $form.find("#user-name").val();
+        var password = $form.find("#password").val();
+        var passwordCk = $form.find("#password-check").val();
 
         if(password !== passwordCk){
             msgModal("Error","서로 다른 비밀번호");
             return;
         }
 
-        var formData = new FormData();
-
-        var form = {
-            userId : userId,
-            userName : userName,
-            password : password
-        }
-
-        console.log(form);
-
-        $.ajax({
-
-            url : "/api/user/signup",
-            type : "post",
-            dataType : "json",
-            data : form,
-            success : (data)=>{
-                console.log(data);
-                location.replace('/');
-            },
-            complete : ()=>{
-            },
-            error : (e,x,c)=>{
-                console.log(e,x,c);
-                
-                msgModal("Error", "회원가입 실패");
-            }
-
-        });
+        showModal('signup-modal');
+        
     });
 });
 </script>
