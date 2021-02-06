@@ -44,37 +44,4 @@ $(()=>{
 });
 
 
-$(() => {
-    // navbar scroll event
-    const $navbar = $("#navbar");
-    const $navtop = $("#navtop");
-    const navbar_loc = $navtop.height() + 10;
-    let isScroll;
-    let isFix = false;
 
-    $(window).scroll((event) => {
-        isScroll = true;
-    });
-
-    setInterval(() => {
-        if (isScroll) {
-            navFix();
-            isScroll = false;
-        }
-    }, 10);
-
-    function navFix() {
-        var st = $(this).scrollTop();
-        if (isFix !== st > navbar_loc) {
-            if (isFix) {
-                $navbar.removeClass("fixed-top");
-                $navtop.css("margin-bottom", "0px");
-            }
-            else {
-                $navbar.addClass("fixed-top");
-                $navtop.css("margin-bottom", "60px");
-            }
-        }
-        isFix = st > navbar_loc;
-    }
-});

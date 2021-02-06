@@ -18,8 +18,8 @@
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
-            <a class="nav-link" th:href="@{/}">
-                <i class="fas fa-fw fa-inbox"></i>
+            <a class="nav-link" th:href="@{/poke/list}">
+                <i class="fas fa-fw fa-book"></i>
                 <span>Dashboard</span></a>
         </li>
 
@@ -46,20 +46,23 @@
         <!-- Divider -->
         <hr class="sidebar-divider">
 
-        <!-- Heading -->
-        <div class="sidebar-heading">
-            admin
+        <div th:if="${session.account !=null && session.account.hasRole('ROLE_ADMIN')}">
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                admin
+            </div>
+    
+            <!-- Nav Item - Charts -->
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/admin/user}">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>User Manage</span></a>
+            </li>
+    
+            <!-- Divider -->
+            <hr class="sidebar-divider">
         </div>
 
-        <!-- Nav Item - Charts -->
-        <li class="nav-item">
-            <a class="nav-link" th:href="@{/admin/userList}">
-                <i class="fas fa-fw fa-chart-area"></i>
-                <span>User Manage</span></a>
-        </li>
-
-        <!-- Divider -->
-        <hr class="sidebar-divider">
 
         <!-- Heading -->
         <div class="sidebar-heading">

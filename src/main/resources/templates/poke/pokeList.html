@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/default">
+
+<style layout:fragment="style">
+/* CSS Start !! */
+
+    .card-body{
+        cursor: pointer;
+    }
+
+    .slide-in-blurred-top{animation:slide-in-blurred-top .6s cubic-bezier(.23,1.000,.32,1.000) both}
+    .vibrate-1{animation:vibrate-1 .3s linear infinite both}
+
+</style>
+
+<div layout:fragment="content" class="container-fluid">
+<!-- HTML Start !! -->
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">List</h1>
+        <a th:href="@{/404}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
+        </a>
+    </div>
+
+    <div class="row" id="data-table">
+
+    </div>
+
+</div>
+
+<script layout:fragment="script">
+// JS Start !!
+
+$(()=>{
+
+    let isScroll;
+    let page = 1;
+
+    searchPokeList();
+
+    function searchPokeList(){
+
+        let data = {
+            page : page
+        }
+
+        $.ajax({
+            url: "/api/poke",
+            type: "GET",  
+            dataType: "json",
+            data: data,
+            success: (data) => {
+
+                let html = "";
+
+                // console.log(data);
+
+                data.forEach(i => {
+
+                    html += '<div class="col-xl-2 col-md-6 mb-4 slide-in-blurred-top">';
+                    html += '<div class="card border-bottom-danger shadow h-100 py-2">';
+                    html += '<div class="card-body">';
+                    html += '<input type="hidden" value="' +i.MON_ID + '">';
+                    html += '<img class="img-fluid vibrate-1" src="/assets/img/mon/' + i.MON_ID + '.png" alt="">';
+                    html += '<div class="row no-gutters align-items-center">';
+                    html += '<div class="col mr-2">';
+                    html += '<div class="text-s font-weight-bold text-danger text-uppercase mb-1">';
+                    html += 'No.' + i.MON_NO;
+                    html += '</div>';
+                    html += '<div class="h5 mb-0 font-weight-bold text-gray-800">' + i.MON_NAME + '</div>';
+
+                    html += '<div class="row align-items-center">'
+                    html += '<div class="col"><span class="font-weight-bold btn active btn-block btn-sm text-light" ' + getColor() + '>' + i.TYPE_A + '</span></div>';
+                    if(i.TYPE_B !== undefined){
+                        html += '<div class="col"><span class="font-weight-bold btn btn-block btn-sm active text-light"' + getColor() + '>' + i.TYPE_B + '</span></div>';
+                    }
+                    html += '</div>';
+
+                    html += '</div></div></div></div></div>';
+
+                });
+
+                $("#data-table").append(html);
+
+                $(".card-body").on("click",(e)=>{
+                   
+                    var $e = $(e.target);
+                    var monNo = $e.parents(".card").find("input[type=hidden]").val();
+                    viewPoke(monNo);
+                });
+
+            },
+            complete: () => {
+
+                
+            },
+            error: (e) => {
+                // 요청 실패
+                console.log(e);
+            }
+        });
+    }
+
+    getColor();
+
+    function viewPoke(id){
+        console.log(id);
+        
+    }
+
+    function getColor(type){
+
+        var r = Math.round(Math.random() * 255);
+        var b = Math.round(Math.random() * 255);
+        var g = Math.round(Math.random() * 255);
+
+        // console.log(r,b,g);
+
+        return 'style="background-color: rgb(' + r + ', ' + b + ', ' + g + ');"'
+    }
+
+    $(window).scroll((event) => {
+        isScroll = true;
+    });
+
+    setInterval(() => {
+        if (isScroll) {
+            scrollPage();
+            isScroll = false;
+        }
+    }, 200);
+
+    function scrollPage() {
+
+        if ($(window).scrollTop() >= $(document).height() - $(window).height()) {
+            page++;
+            searchPokeList();
+        }
+
+    }
+
+
+
+});
+
+</script>
+
+</html>

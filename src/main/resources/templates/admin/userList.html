@@ -38,7 +38,7 @@
 $(()=>{
 // script start
 
-    const $table = $("#page #data-table");
+    const $table = $("#data-table");
     let userNo;
 
     setModal('delete','delete','deleteModal');
@@ -64,6 +64,8 @@ $(()=>{
             success: (data) => {
 
                 let html = "";
+
+                console.log(data);
 
                 data.forEach(e => {
                     html += '<tr><input type="hidden" class="userNo" value="' + e.user_no + '">';
