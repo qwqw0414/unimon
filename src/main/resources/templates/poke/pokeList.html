@@ -8,9 +8,7 @@
     .card-body{
         cursor: pointer;
     }
-
-    .slide-in-blurred-top{animation:slide-in-blurred-top .6s cubic-bezier(.23,1.000,.32,1.000) both}
-    .vibrate-1{animation:vibrate-1 .3s linear infinite both}
+	.fade-in{-webkit-animation:fade-in 1.2s cubic-bezier(.39,.575,.565,1.000) both;animation:fade-in 1.2s cubic-bezier(.39,.575,.565,1.000) both}
 
 </style>
 
@@ -60,7 +58,7 @@ $(()=>{
 
                 data.forEach(i => {
 
-                    html += '<div class="col-xl-2 col-md-6 mb-4 slide-in-blurred-top">';
+                    html += '<div class="col-xl-2 col-md-4 col-sm-6 mb-4 fade-in">';
                     html += '<div class="card border-bottom-danger shadow h-100 py-2">';
                     html += '<div class="card-body">';
                     html += '<input type="hidden" value="' +i.MON_ID + '">';
@@ -74,13 +72,14 @@ $(()=>{
 
                     html += '<div class="row align-items-center">'
                     html += '<div class="col"><span class="font-weight-bold btn active btn-block btn-sm text-light" ' + getColorA(i.TYPE_A) + '>' + i.TYPE_A + '</span></div>';
+
                     if(i.TYPE_B !== undefined){
                     	html += '<div class="col"><span class="font-weight-bold btn btn-block btn-sm active text-light"' + getColorB(i.TYPE_B) + '>' + i.TYPE_B + '</span></div>';
                     } else {
                     	html += '<div class="col"><span class="font-weight-bold btn btn-block btn-sm active text-light"></span></div>';
                     }
-                    html += '</div>';
 
+                    html += '</div>';
                     html += '</div></div></div></div></div>';
 
                 });

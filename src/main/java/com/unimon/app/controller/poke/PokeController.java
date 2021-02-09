@@ -26,4 +26,15 @@ public class PokeController {
 		return null;
 	}
 	
+	@RequestMapping(value = "/pick", method = RequestMethod.GET)
+	public String pokePickView() {
+		
+		return "poke/pick";
+	}
+
+	
+	
+	
+	
+	
 }
