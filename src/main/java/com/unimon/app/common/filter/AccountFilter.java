@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 public class AccountFilter implements Filter {
 	
 //	영문 숫자 6이상 20이하
-	private static final String REG_USER_ID = "ll[a-z]+[a-z0-9]{5,19}$";
+	private static final String REG_USER_ID = "^[a-z]+[a-z0-9]{5,19}$";
 	
 //	영어 한글 2이상 8이하
 	private static final String REG_USER_NAME = "^[a-z가-힣]{2,8}$";

@@ -21,8 +21,23 @@
 </div>
 <!-- /.container-fluid -->
 
-<script layout:fragment="style">
+<script layout:fragment="script">
 // JS Start !!
+
+$(()=>{
+
+    var dataRange = 'ReadRange';
+
+    // typeof : 해당 변수의 타입이 String 경우 배열로 변환
+    if(typeof(dataRange) === "string"){
+        var temp = dataRange;
+        dataRange = new Array();
+        dataRange.push([temp]);
+    }
+
+    console.log(dataRange);
+
+});
 
 </script>
 
