@@ -8,12 +8,27 @@
 
 	<select id="searchPokeByKeyword" parameterType="map" resultType="map">
 	
-		select * from tb_pokemon
-		where 
-			mon_id &lt; 49500 and substring(mon_id, 6) = 1
+		SELECT * FROM tb_pokemon
+		WHERE 
+			mon_id &lt; 49500 
+			AND substring(mon_id, 6) = 1
+			
 			<if test="!keyword.isEmpty()"> 
-				and mon_name like  '%${keyword}%'
+				AND mon_name LIKE  '%${keyword}%'
 			</if>
+	</select>
+
+	<select id="countPokeByKeword" parameterType="map" resultType="_int">
+	
+		SELECT COUNT(*) FROM tb_pokemon
+		WHERE 
+			mon_id &lt; 49500 
+			AND substring(mon_id, 6) = 1
+			
+			<if test="!keyword.isEmpty()"> 
+				AND mon_name LIKE  '%${keyword}%'
+			</if>
+	
 	</select>
 
 <!-- ##################################################### -->

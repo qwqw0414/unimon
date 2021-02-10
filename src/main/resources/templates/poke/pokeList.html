@@ -8,15 +8,19 @@
     .card-body{
         cursor: pointer;
     }
-	.fade-in{-webkit-animation:fade-in 1.2s cubic-bezier(.39,.575,.565,1.000) both;animation:fade-in 1.2s cubic-bezier(.39,.575,.565,1.000) both}
-
 
 	.searchGroup{
 		width: 200px !important;
 		min-width: 180px;
 	}
+
 	.searchInput{
 		border-radius: 0 !important;
+	}
+
+	div#pokeType .col{
+		padding-right: 6px;
+		padding-left: 6px;
 	}
 </style>
 
@@ -38,7 +42,7 @@
 		</button>
 	</div>
 
-	<div class="row" id="data-table">
+	<div class="row" id="dataTable">
 
     </div>
 
@@ -51,12 +55,16 @@ $(()=>{
 
 	const $searchBar = $("#content #searchInput");
 	const $searchBtn = $("#content #searchBtn");
+	const $dataTable = $("#content #dataTable");
 
     let isScroll;
-    let page = 1;
 	let keyword = "";
+    let page = 1;
+	let totalContents = 0;
+	let numPerPage;
 
-    searchPokeList();
+	// 온로드 함수
+    getPokeList();
 
 	// 이벤트 핸들링
 
@@ -64,25 +72,30 @@ $(()=>{
 	$searchBtn.on("click",()=>{
 		console.log("1");
 		// 리스트 초기화
-		$("#data-table").html("");
+		$dataTable.html("");
 
 		// 페이징 초기화
 		page = 1;
+		totalContents = 0;
 
 		// 검색어 대입
 		keyword = $searchBar.val();
 
 		// 검색 api 호출
-		searchPokeList();
+		getPokeList();
 	});
 
-    function searchPokeList(){
+	// 데이터 리스트 조회
+    function getPokeList(){
 
+		// 파라미터 값 대입
         let data = {
             page : page,
-			keyword : keyword
+			keyword : keyword,
+			totalContents : totalContents
         }
 
+		// 비동기 데이터 조회
         $.ajax({
             url: "/api/poke/list",
             type: "GET",  
@@ -90,11 +103,14 @@ $(()=>{
             data: data,
             success: (data) => {
 
+				console.log(data);
+
                 let html = "";
 
-                console.log(data);
+				// page 재설정
+				totalContents = data.page.totalContents;
 
-                data.forEach(i => {
+                data.list.forEach(i => {
 
                     html += '<div class="col-xl-2 col-md-4 col-sm-6 mb-4 fade-in">';
                     html += '<div class="card border-bottom-danger shadow h-100 py-2">';
@@ -108,7 +124,7 @@ $(()=>{
                     html += '</div>';
                     html += '<div class="h5 mb-0 font-weight-bold text-gray-800">' + i.MON_NAME + '</div>';
 
-                    html += '<div class="row align-items-center">'
+                    html += '<div class="row align-items-center" id="pokeType">'
                     html += '<div class="col"><span class="font-weight-bold btn active btn-block btn-sm text-light" ' + getColor(i.TYPE_A) + '>' + i.TYPE_A + '</span></div>';
 
                     if(i.TYPE_B !== undefined){
@@ -122,10 +138,9 @@ $(()=>{
 
                 });
 
-                $("#data-table").append(html);
+                $dataTable.append(html);
 
                 $(".card-body").on("click",(e)=>{
-                   
                     var $e = $(e.target);
                     var monNo = $e.parents(".card").find("input[type=hidden]").val();
                     viewPoke(monNo);
@@ -143,72 +158,9 @@ $(()=>{
         });
     }
 
-    getColor();
-
     function viewPoke(id){
         console.log(id);
-        
     }
-    
-    function getColor(type){
-		switch(type) {
-    	case '풀':
-			return 'style="background-color: #7ab766;"'
-			break;
-    	case '불꽃':
-    		return 'style="background-color: #efa061;"'
-    		break;		
-    	case '물':
-    		return 'style="background-color: #608fcf;"'
-    		break;
-    	case '벌레':
-    		return 'style="background-color: #9bbf48"'
-    		break;
-    	case '노말':
-    		return 'style="background-color: #92999f;"'
-    		break;
-    	case '독':
-    		return 'style="background-color: #a16ec2;"'
-    		break;
-    	case '전기':
-    		return 'style="background-color: #edd259;"'
-    		break;
-    	case '땅':
-    		return 'style="background-color: #ca7c50;"'
-    		break;
-    	case '얼음':
-    		return 'style="background-color: #8dccc0;"'
-    		break;
-    	case '페어리':
-    		return 'style="background-color: #dc94e1;"'
-    		break;
-    	case '악':
-    		return 'style="background-color: #585365;"'
-    		break;
-    	case '격투':
-    		return 'style="background-color: #bc4b6a;"'
-    		break;
-    	case '바위':
-    		return 'style="background-color: #c3b78f;"'
-    		break;
-    	case '에스퍼':
-    		return 'style="background-color: #e57879;"'
-    		break;
-    	case '고스트':
-    		return 'style="background-color: #5769a7;"'
-    		break;
-    	case '비행':
-    		return 'style="background-color: #95a8d9;"'
-    		break;
-    	case '강철':
-    		return 'style="background-color: #678d9e;"'
-    		break;
-    	case '드래곤':
-    		return 'style="background-color: #336cbe;"'
-    		break;
-		}
-    }
-    
 
     $(window).scroll((event) => {
         isScroll = true;
@@ -222,23 +174,19 @@ $(()=>{
     }, 200);
 
     function scrollPage() {
-
         if ($(window).scrollTop() >= $(document).height() - $(window).height()) {
-            page++;
-            searchPokeList();
-        }
 
+			var cardCnt = $dataTable.find(".card-body").length;
+
+			if(cardCnt < totalContents){
+				page++;
+				getPokeList();
+			}
+
+        }
     }
 
 });
-
-
-// function search() {
-// 	var searchContent = $('.searchInput').val();
-// 	console.log(searchContent);
-	
-// 	location.href = '/poke/search/' + searchContent;
-// }
 
 </script>
 

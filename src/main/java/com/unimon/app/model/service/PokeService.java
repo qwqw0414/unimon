@@ -21,5 +21,9 @@ public class PokeService {
 		return pokeDao.searchPokeByKeyword(param);
 	}
 
+	public int countPokeByKeword(Map<String, Object> param) throws RuntimeException {
+		return pokeDao.countPokeByKeword(param);
+	}
+
 	
 }

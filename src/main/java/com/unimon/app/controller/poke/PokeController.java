@@ -41,9 +41,6 @@ public class PokeController {
 		
 		return "poke/pick";
 	}
-
-	
-	
 	
 	
 }

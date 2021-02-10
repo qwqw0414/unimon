@@ -20,5 +20,9 @@ public class PokeDao {
 		return sst.selectList("poke.searchPokeByKeyword", param, (RowBounds) ((Pagination) param.get("page")).getRowBounds());
 	}
 
+	public int countPokeByKeword(Map<String, Object> param) throws RuntimeException {
+		return sst.selectOne("poke.countPokeByKeword", param);
+	}
+
 	
 }
