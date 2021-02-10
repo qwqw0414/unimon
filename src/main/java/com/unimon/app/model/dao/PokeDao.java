@@ -20,8 +20,5 @@ public class PokeDao {
 		return sst.selectList("poke.searchPokeByKeyword", param, (RowBounds) ((Pagination) param.get("page")).getRowBounds());
 	}
 
-	public List<Map<String, Object>> searchingPoke(Map<String, Object> param) {
-		return sst.selectList("poke.searchingPoke", param);
-	}
 	
 }

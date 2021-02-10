@@ -21,8 +21,5 @@ public class PokeService {
 		return pokeDao.searchPokeByKeyword(param);
 	}
 
-	public List<Map<String, Object>> searchingPoke(Map<String, Object> param) {
-		return pokeDao.searchingPoke(param);
-	}
 	
 }

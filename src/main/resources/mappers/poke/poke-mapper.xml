@@ -9,13 +9,11 @@
 	<select id="searchPokeByKeyword" parameterType="map" resultType="map">
 	
 		select * from tb_pokemon
-		where mon_id &lt; 49500 and substring(mon_id, 6) = 1
-	</select>
-	
-	<select id="searchingPoke" parameterType="map" resultType="map">
-	
-		select * from tb_pokemon
-		where mon_id &lt; 49500 and substring(mon_id, 6) = 1 and mon_name like concat('%', #{searchContent}, '%')
+		where 
+			mon_id &lt; 49500 and substring(mon_id, 6) = 1
+			<if test="!keyword.isEmpty()"> 
+				and mon_name like  '%${keyword}%'
+			</if>
 	</select>
 
 <!-- ##################################################### -->

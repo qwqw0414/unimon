@@ -44,16 +44,4 @@ public class PokeRestController {
 		return gson.toJson(result);
 	}
 	
-//	@GetMapping(value = "/search")
-//	public String searchingPoke(@RequestParam("searchContent") String searchContent) throws Exception {
-//		
-//		Map<String, Object> param = new HashMap<>();
-//		param.put("searchContent", searchContent);
-//		
-//		List<Map<String, Object>> result = pokeService.searchingPoke(param);
-//		
-//		return gson.toJson(result);
-//		
-//	}
-	
 }

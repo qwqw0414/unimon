@@ -42,22 +42,6 @@ public class PokeController {
 		return "poke/pick";
 	}
 
-	@RequestMapping(value = "/search/{searchContent}", method = RequestMethod.GET)
-	public ModelAndView SearchingPoke(@PathVariable("searchContent") String searchContent, ModelAndView mav) {
-		
-		Map<String, Object> param = new HashMap<>();
-		param.put("searchContent", searchContent);
-		
-		List<Map<String, Object>> result = pokeService.searchingPoke(param);
-		
-		System.out.println("dddddddddddddd"+result);
-		
-		mav.addObject("searchList", result);
-		mav.addObject("searchContent", searchContent);
-		mav.setViewName("poke/pokeSearchList");
-		
-		return mav;
-	}
 	
 	
 	
