@@ -32,12 +32,11 @@
     
     <!-- Search -->
 	<div class="input-group mb-3 searchGroup">
-		<input type="text" class="form-control searchInput" placeholder="search..." aria-label="search..." aria-describedby="button-addon2" 
-			onkeyPress="if(event.keyCode == 13) search();">
-		<button class="btn btn-outline-secondary bg-light border-0" type="button" id="button-addon2" onclick="search();"><i class="fas fa-search"></i></button>
+		<input type="text" class="form-control" id="searchInput" placeholder="search..." aria-label="search..." aria-describedby="button-addon2">
+		<button class="btn btn-outline-secondary bg-light border-0" type="button" id="searchBtn">
+			<i class="fas fa-search"></i>
+		</button>
 	</div>
-    
-   
 
 	<div class="row" id="data-table">
 
@@ -50,15 +49,37 @@
 
 $(()=>{
 
+	const $searchBar = $(".content #searchInput");
+	const $searchBtn = $(".content #searchBtn");
+
     let isScroll;
     let page = 1;
+	let keyword = "";
 
     searchPokeList();
+
+	// 이벤트 핸들링
+
+	// 검색 버튼 클릭
+	$searchBtn.on("click",()=>{
+		// 리스트 초기화
+		$("#data-table").html("");
+
+		// 페이징 초기화
+		page = 1;
+
+		// 검색어 대입
+		keyword = $searchBar.val();
+
+		// 검색 api 호출
+		searchPokeList();
+	});
 
     function searchPokeList(){
 
         let data = {
-            page : page
+            page : page,
+			keyword : keyword
         }
 
         $.ajax({
@@ -70,7 +91,7 @@ $(()=>{
 
                 let html = "";
 
-                // console.log(data);
+                console.log(data);
 
                 data.forEach(i => {
 

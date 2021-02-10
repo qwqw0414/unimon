@@ -29,13 +29,15 @@ public class PokeRestController {
 	private PokeService pokeService;
 	
 	@GetMapping(value = "/list")
-	public String searchPoke(@RequestParam("page") int cPage) throws Exception {
+	public String searchPoke(@RequestParam("page") int cPage, 
+							 @RequestParam(value = "keyword", defaultValue = "") String keyword) throws Exception {
 		
 		Pagination page = new Pagination(cPage, 500);
 		page.setNumPerPage(24);
 		
 		Map<String, Object> param = new HashMap<>();
 		param.put("page", page);
+		param.put("keyword", keyword);
 		
 		List<Map<String, Object>> result = pokeService.searchPoke(param);
 
