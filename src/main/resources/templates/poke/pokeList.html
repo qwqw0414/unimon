@@ -87,10 +87,10 @@ $(()=>{
                     html += '<div class="h5 mb-0 font-weight-bold text-gray-800">' + i.MON_NAME + '</div>';
 
                     html += '<div class="row align-items-center">'
-                    html += '<div class="col"><span class="font-weight-bold btn active btn-block btn-sm text-light" ' + getColorA(i.TYPE_A) + '>' + i.TYPE_A + '</span></div>';
+                    html += '<div class="col"><span class="font-weight-bold btn active btn-block btn-sm text-light" ' + getColor(i.TYPE_A) + '>' + i.TYPE_A + '</span></div>';
 
                     if(i.TYPE_B !== undefined){
-                    	html += '<div class="col"><span class="font-weight-bold btn btn-block btn-sm active text-light"' + getColorB(i.TYPE_B) + '>' + i.TYPE_B + '</span></div>';
+                    	html += '<div class="col"><span class="font-weight-bold btn btn-block btn-sm active text-light"' + getColor(i.TYPE_B) + '>' + i.TYPE_B + '</span></div>';
                     } else {
                     	html += '<div class="col"><span class="font-weight-bold btn btn-block btn-sm active text-light"></span></div>';
                     }
@@ -121,16 +121,15 @@ $(()=>{
         });
     }
 
-    getColorA();
-    getColorB();
+    getColor();
 
     function viewPoke(id){
         console.log(id);
         
     }
     
-    function getColorA(typeA){
-		switch(typeA) {
+    function getColor(type){
+		switch(type) {
     	case '풀':
 			return 'style="background-color: #7ab766;"'
 			break;
@@ -188,65 +187,6 @@ $(()=>{
 		}
     }
     
-    function getColorB(typeB){
-        
-        switch(typeB) {
-    	case '풀':
-			return 'style="background-color: #7ab766;"'
-			break;
-    	case '불꽃':
-    		return 'style="background-color: #efa061;"'
-    		break;		
-    	case '물':
-    		return 'style="background-color: #608fcf;"'
-    		break;
-    	case '벌레':
-    		return 'style="background-color: #9bbf48"'
-    		break;
-    	case '노말':
-    		return 'style="background-color: #92999f;"'
-    		break;
-    	case '독':
-    		return 'style="background-color: #a16ec2;"'
-    		break;
-    	case '전기':
-    		return 'style="background-color: #edd259;"'
-    		break;
-    	case '땅':
-    		return 'style="background-color: #ca7c50;"'
-    		break;
-    	case '얼음':
-    		return 'style="background-color: #8dccc0;"'
-    		break;
-    	case '페어리':
-    		return 'style="background-color: #dc94e1;"'
-    		break;
-    	case '악':
-    		return 'style="background-color: #585365;"'
-    		break;
-    	case '격투':
-    		return 'style="background-color: #bc4b6a;"'
-    		break;
-    	case '바위':
-    		return 'style="background-color: #c3b78f;"'
-    		break;
-    	case '에스퍼':
-    		return 'style="background-color: #e57879;"'
-    		break;
-    	case '고스트':
-    		return 'style="background-color: #5769a7;"'
-    		break;
-    	case '비행':
-    		return 'style="background-color: #95a8d9;"'
-    		break;
-    	case '강철':
-    		return 'style="background-color: #678d9e;"'
-    		break;
-    	case '드래곤':
-    		return 'style="background-color: #336cbe;"'
-    		break;
-		}
-    }
 
     $(window).scroll((event) => {
         isScroll = true;
