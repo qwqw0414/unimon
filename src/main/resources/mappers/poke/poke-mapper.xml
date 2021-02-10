@@ -11,6 +11,12 @@
 		select * from tb_pokemon
 		where mon_id &lt; 49500 and substring(mon_id, 6) = 1
 	</select>
+	
+	<select id="searchingPoke" parameterType="map" resultType="map">
+	
+		select * from tb_pokemon
+		where mon_id &lt; 49500 and substring(mon_id, 6) = 1 and mon_name like concat('%', #{searchContent}, '%')
+	</select>
 
 <!-- ##################################################### -->
 <!-- 						INSERT 						   -->

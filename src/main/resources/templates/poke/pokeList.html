@@ -10,11 +10,18 @@
     }
 	.fade-in{-webkit-animation:fade-in 1.2s cubic-bezier(.39,.575,.565,1.000) both;animation:fade-in 1.2s cubic-bezier(.39,.575,.565,1.000) both}
 
+
+	.searchGroup{
+		width: 200px !important;
+		min-width: 180px;
+	}
+	.searchInput{
+		border-radius: 0 !important;
+	}
 </style>
 
 <div layout:fragment="content" class="container-fluid">
-<!-- HTML Start !! -->
-
+<!-- HTML Start !! -->	
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">List</h1>
@@ -22,8 +29,17 @@
             <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
         </a>
     </div>
+    
+    <!-- Search -->
+	<div class="input-group mb-3 searchGroup">
+		<input type="text" class="form-control searchInput" placeholder="search..." aria-label="search..." aria-describedby="button-addon2" 
+			onkeyPress="if(event.keyCode == 13) search();">
+		<button class="btn btn-outline-secondary bg-light border-0" type="button" id="button-addon2" onclick="search();"><i class="fas fa-search"></i></button>
+	</div>
+    
+   
 
-    <div class="row" id="data-table">
+	<div class="row" id="data-table">
 
     </div>
 
@@ -46,7 +62,7 @@ $(()=>{
         }
 
         $.ajax({
-            url: "/api/poke",
+            url: "/api/poke/list",
             type: "GET",  
             dataType: "json",
             data: data,
@@ -112,16 +128,6 @@ $(()=>{
         console.log(id);
         
     }
-
-//     function getColor(type){
-//         var r = Math.round(Math.random() * 255);
-//         var b = Math.round(Math.random() * 255);
-//         var g = Math.round(Math.random() * 255);
-
-//         // console.log(r,b,g);
-        
-//         return 'style="background-color: rgb(' + r + ', ' + b + ', ' + g + ');"'
-//     }
     
     function getColorA(typeA){
 		switch(typeA) {
@@ -183,9 +189,6 @@ $(()=>{
     }
     
     function getColorB(typeB){
-        var r = Math.round(Math.random() * 255);
-        var b = Math.round(Math.random() * 255);
-        var g = Math.round(Math.random() * 255);
         
         switch(typeB) {
     	case '풀':
@@ -243,14 +246,6 @@ $(()=>{
     		return 'style="background-color: #336cbe;"'
     		break;
 		}
-
-        // console.log(r,b,g);
-// 		console.log(typeA);
-//         if(type == '풀'){
-//     		return 'style="background-color: #7ab766;"'
-//     	}
-        
-        return 'style="background-color: rgb(' + r + ', ' + b + ', ' + g + ');"'
     }
 
     $(window).scroll((event) => {
@@ -273,9 +268,15 @@ $(()=>{
 
     }
 
-
-
 });
+
+
+function search() {
+	var searchContent = $('.searchInput').val();
+	console.log(searchContent);
+	
+	location.href = '/poke/search/' + searchContent;
+}
 
 </script>
 

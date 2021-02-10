@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/default">
+
+<style layout:fragment="style">
+/* CSS Start !! */
+
+    .card-body{
+        cursor: pointer;
+    }
+	.fade-in{-webkit-animation:fade-in 1.2s cubic-bezier(.39,.575,.565,1.000) both;animation:fade-in 1.2s cubic-bezier(.39,.575,.565,1.000) both}
+
+
+	.searchGroup{
+		width: 200px !important;
+		min-width: 180px;
+	}
+	.searchInput{
+		border-radius: 0 !important;
+	}
+</style>
+
+<div layout:fragment="content" class="container-fluid">
+<!-- HTML Start !! -->	
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">List</h1>
+        <a th:href="@{/404}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
+        </a>
+    </div>
+    
+    <!-- Search -->
+	<div class="input-group mb-3 searchGroup">
+		<input type="text" class="form-control searchInput" placeholder="search..." aria-label="search..." aria-describedby="button-addon2" 
+			onkeyPress="if(event.keyCode == 13) search();">
+		<button class="btn btn-outline-secondary bg-light border-0" type="button" id="button-addon2" onclick="search();"><i class="fas fa-search"></i></button>
+	</div>
+    
+   
+
+	<div class="row" id="data-table">
+		<div class="col-xl-2 col-md-4 col-sm-6 mb-4 fade-in" th:each="searchList : ${searchList}">
+			<div class="card border-bottom-danger shadow h-100 py-2">
+				<div class="card-body">
+					<input type="hidden" th:value="${searchList.MON_ID}">
+					<img class="img-fluid" th:src="@{/assets/img/mon/}+ ${searchList.MON_ID} + @{.png}" alt="">
+					<div class="row no-gutters align-items-center">
+						<div class="col mr-2">
+							<div class="text-s font-weight-bold text-danger text-uppercase mb-1" th:text="No. + ${searchList.MON_NO}"></div>
+							<div class="h5 mb-0 font-weight-bold text-gray-800" th:text="${searchList.MON_NAME}"></div>
+							<div class="row align-items-center">
+								<div class="col"><span class="font-weight-bold btn active btn-block btn-sm " getColorA(i.TYPE_A) th:text="${searchList.TYPE_A}"></span></div>	<!-- text-light -->
+								<div class="col" th:if="${searchList.TYPE_B != null}"><span class="font-weight-bold btn btn-block btn-sm active " getColorB(i.TYPE_B) th:text="${searchList.TYPE_B}"></span></div>	<!-- text-light -->
+<!-- 								<div class="col" th:unless="${searchList.TYPE_B != null}"><span class="font-weight-bold btn btn-block btn-sm active "></span></div>	 text-light -->
+<!-- 								<div th:if = "${examData != null}"> ... <div> -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+
+
+	<input id="searchContent" type="hidden" th:value="${searchContent}">
+	<input id="searchList" type="hidden" th:value="${searchList}">
+</div>
+
+<script layout:fragment="script">
+
+function getColorA(typeA){
+	switch(typeA) {
+	case '풀':
+		return 'style="background-color: #7ab766;"'
+		break;
+	case '불꽃':
+		return 'style="background-color: #efa061;"'
+		break;		
+	case '물':
+		return 'style="background-color: #608fcf;"'
+		break;
+	case '벌레':
+		return 'style="background-color: #9bbf48"'
+		break;
+	case '노말':
+		return 'style="background-color: #92999f;"'
+		break;
+	case '독':
+		return 'style="background-color: #a16ec2;"'
+		break;
+	case '전기':
+		return 'style="background-color: #edd259;"'
+		break;
+	case '땅':
+		return 'style="background-color: #ca7c50;"'
+		break;
+	case '얼음':
+		return 'style="background-color: #8dccc0;"'
+		break;
+	case '페어리':
+		return 'style="background-color: #dc94e1;"'
+		break;
+	case '악':
+		return 'style="background-color: #585365;"'
+		break;
+	case '격투':
+		return 'style="background-color: #bc4b6a;"'
+		break;
+	case '바위':
+		return 'style="background-color: #c3b78f;"'
+		break;
+	case '에스퍼':
+		return 'style="background-color: #e57879;"'
+		break;
+	case '고스트':
+		return 'style="background-color: #5769a7;"'
+		break;
+	case '비행':
+		return 'style="background-color: #95a8d9;"'
+		break;
+	case '강철':
+		return 'style="background-color: #678d9e;"'
+		break;
+	case '드래곤':
+		return 'style="background-color: #336cbe;"'
+		break;
+	}
+}
+
+function getColorB(typeB){
+    
+    switch(typeB) {
+	case '풀':
+		return 'style="background-color: #7ab766;"'
+		break;
+	case '불꽃':
+		return 'style="background-color: #efa061;"'
+		break;		
+	case '물':
+		return 'style="background-color: #608fcf;"'
+		break;
+	case '벌레':
+		return 'style="background-color: #9bbf48"'
+		break;
+	case '노말':
+		return 'style="background-color: #92999f;"'
+		break;
+	case '독':
+		return 'style="background-color: #a16ec2;"'
+		break;
+	case '전기':
+		return 'style="background-color: #edd259;"'
+		break;
+	case '땅':
+		return 'style="background-color: #ca7c50;"'
+		break;
+	case '얼음':
+		return 'style="background-color: #8dccc0;"'
+		break;
+	case '페어리':
+		return 'style="background-color: #dc94e1;"'
+		break;
+	case '악':
+		return 'style="background-color: #585365;"'
+		break;
+	case '격투':
+		return 'style="background-color: #bc4b6a;"'
+		break;
+	case '바위':
+		return 'style="background-color: #c3b78f;"'
+		break;
+	case '에스퍼':
+		return 'style="background-color: #e57879;"'
+		break;
+	case '고스트':
+		return 'style="background-color: #5769a7;"'
+		break;
+	case '비행':
+		return 'style="background-color: #95a8d9;"'
+		break;
+	case '강철':
+		return 'style="background-color: #678d9e;"'
+		break;
+	case '드래곤':
+		return 'style="background-color: #336cbe;"'
+		break;
+	}
+}
+
+function search() {
+	var searchContent = $('.searchInput').val();
+	console.log(searchContent);
+	
+	location.href = '/poke/search/' + searchContent;
+}
+
+</script>
+</html>

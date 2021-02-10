@@ -6,8 +6,10 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
@@ -26,7 +28,7 @@ public class PokeRestController {
 	@Autowired
 	private PokeService pokeService;
 	
-	@GetMapping(value = "")
+	@GetMapping(value = "/list")
 	public String searchPoke(@RequestParam("page") int cPage) throws Exception {
 		
 		Pagination page = new Pagination(cPage, 500);
@@ -39,5 +41,17 @@ public class PokeRestController {
 
 		return gson.toJson(result);
 	}
+	
+//	@GetMapping(value = "/search")
+//	public String searchingPoke(@RequestParam("searchContent") String searchContent) throws Exception {
+//		
+//		Map<String, Object> param = new HashMap<>();
+//		param.put("searchContent", searchContent);
+//		
+//		List<Map<String, Object>> result = pokeService.searchingPoke(param);
+//		
+//		return gson.toJson(result);
+//		
+//	}
 	
 }

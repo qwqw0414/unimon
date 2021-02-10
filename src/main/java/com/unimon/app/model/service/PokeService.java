@@ -20,5 +20,9 @@ public class PokeService {
 	public List<Map<String, Object>> searchPoke(Map<String, Object> param) throws RuntimeException {
 		return pokeDao.searchPokeByKeyword(param);
 	}
+
+	public List<Map<String, Object>> searchingPoke(Map<String, Object> param) {
+		return pokeDao.searchingPoke(param);
+	}
 	
 }
