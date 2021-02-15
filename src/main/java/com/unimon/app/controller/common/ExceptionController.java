@@ -19,7 +19,10 @@ import lombok.extern.slf4j.Slf4j;
 @ControllerAdvice
 public class ExceptionController {
 
-//	400 커스텀 에러
+	/**
+	 * 커스텀 예외 핸들링
+	 * @return HTTP 400
+	 */
 	@ExceptionHandler({ AppException.class })
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Exception message")
 	public HttpStatus customError(final AppException e, HttpServletRequest request) {
@@ -31,7 +34,10 @@ public class ExceptionController {
 		return HttpStatus.BAD_REQUEST;
 	}
 
-//	400 잘못된 요청
+	/**
+	 * BAD_REQUEST 예외 핸들링 
+	 * @return HTTP 400
+	 */
 	@ExceptionHandler({ RuntimeException.class })
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Exception message")
 	public String badRequest(final RuntimeException e, HttpServletRequest request) {
@@ -44,7 +50,10 @@ public class ExceptionController {
 		return "error/error";
 	}
 
-//	401 사용자 인증 필요
+	/**
+	 * UNAUTHORIZED 예외 핸들링 
+	 * @return HTTP 401
+	 */
 	@ExceptionHandler({ UnauthorizedException.class })
 	@ResponseStatus(value = HttpStatus.UNAUTHORIZED, reason = "Exception message")
 	public String unauthorized(final UnauthorizedException e, HttpServletRequest request) {
@@ -56,7 +65,10 @@ public class ExceptionController {
 		return "error/error";
 	}
 
-//	403 서비스 이용 권한 없음
+	/**
+	 * FORBIDDEN 예외 핸들링
+	 * @return HTTP 403
+	 */
 	@ExceptionHandler({ ForbiddenException.class })
 	@ResponseStatus(value = HttpStatus.FORBIDDEN, reason = "Exception message")
 	public String forbidden(final ForbiddenException e, HttpServletRequest request) {
@@ -68,7 +80,10 @@ public class ExceptionController {
 		return "error/error";
 	}
 
-//	500 서버 오류
+	/**
+	 * INTERNAL_SERVER_ERROR 예외 핸들링
+	 * @return HTTP 500
+	 */
 	@ExceptionHandler({ Exception.class })
 	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason = "Exception message")
 	public String handleAll(final Exception e, HttpServletRequest request) {

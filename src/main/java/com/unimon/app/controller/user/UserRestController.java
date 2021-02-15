@@ -40,6 +40,11 @@ public class UserRestController {
 //										POST
 //	###############################################################################
 	
+	/**
+	 * 회원 가입
+	 * @return
+	 * @throws Exception
+	 */
 	@PostMapping(value = "/signup")
 	public HttpStatus signup(@RequestParam("userId") String userId,
 							 @RequestParam("userName") String userName,
@@ -55,6 +60,11 @@ public class UserRestController {
 		return HttpStatus.OK;
 	}
 	
+	/**
+	 * 로그인
+	 * @return
+	 * @throws Exception
+	 */
 	@PostMapping(value = "/signin")
 	public HttpStatus signin(@RequestParam("userId") String userId,
 						 	 @RequestParam("password") String password,

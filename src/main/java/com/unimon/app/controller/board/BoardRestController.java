@@ -41,6 +41,11 @@ public class BoardRestController {
 //										GET
 //  ###############################################################################
 	
+	/**
+	 * 게시글 상세 정보
+	 * @return
+	 * @throws Exception
+	 */
 	@Role("ROLE_USER")
 	@GetMapping(value = "/view/{no}")
 	public String readBoard(@PathVariable("no") long boardNo) throws Exception {
@@ -50,6 +55,11 @@ public class BoardRestController {
 		return gson.toJson(result);
 	}
 
+	/**
+	 * 게시글 키워드 매칭 조회
+	 * @return
+	 * @throws Exception
+	 */
 	@Role("ROLE_USER")
 	@GetMapping(value = "/list")
 	public String searchBoard( @RequestParam(value = "keyword", defaultValue = "") String keyword,
@@ -76,6 +86,11 @@ public class BoardRestController {
 //    									POST
 //  ###############################################################################
 
+	/**
+	 * 게시글 작성 
+	 * @return
+	 * @throws Exception
+	 */
 	@Role("ROLE_USER")
 	@PostMapping(value = "/write")
 	public HttpStatus boardWrite(@RequestParam("title") String title, @RequestParam("contents") String contents,
@@ -105,6 +120,11 @@ public class BoardRestController {
 //    									DELETE
 //  ###############################################################################
 
+	/**
+	 * 게시글 삭제
+	 * @return
+	 * @throws Exception
+	 */
 	@Role("ROLE_USER")
 	@DeleteMapping(value = "/board/{no}")
 	public HttpStatus removeBoard(@PathVariable("no") long boardNo, HttpSession session) throws Exception{

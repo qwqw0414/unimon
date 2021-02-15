@@ -42,6 +42,11 @@ public class AdminRestController {
 //										GET
 //	###############################################################################
 
+	/**
+	 * 유저번호를 이용해 해당 유저가 보유한 모든 궈한을 리턴
+	 * @return
+	 * @throws Exception
+	 */
 	@Role("ROLE_ADMIN")
 	@GetMapping(value = "/auth/{no}")
 	public String searchUserAuth(@PathVariable(value = "no") long userNo) throws Exception {
@@ -51,6 +56,11 @@ public class AdminRestController {
 		return gson.toJson(result);
 	}
 
+	/**
+	 * 키워드를 이용해 매칭된 유저 리스트를 리턴
+	 * @return
+	 * @throws Exception
+	 */
 	@Role("ROLE_ADMIN")
 	@GetMapping(value = "/user")
 	public String searchUserList(@RequestParam(value = "keyword", defaultValue = "") String keyword,
@@ -74,7 +84,11 @@ public class AdminRestController {
 //									    POST
 //	###############################################################################
 
-//	user 권한 부여
+	/**
+	 * 해당 계정에 ROLE_USER 부여
+	 * @return
+	 * @throws Exception
+	 */
 	@Role("ROLE_ADMIN")
 	@PostMapping(value = "/auth/user/{no}")
 	public HttpStatus grantRoleUser(@PathVariable("no") long userNo) throws Exception {
@@ -88,7 +102,11 @@ public class AdminRestController {
 		return HttpStatus.OK;
 	}
 
-//	admin 권한 부여
+	/**
+	 * 해당 계정에 ROLE_ADMIN 부여
+	 * @return
+	 * @throws Exception
+	 */
 	@Role("ROLE_SUPER")
 	@PostMapping(value = "/auth/admin/{no}")
 	public HttpStatus grantRoleAdmin(@PathVariable("no") long userNo, HttpSession session) throws Exception {
@@ -109,6 +127,10 @@ public class AdminRestController {
 //									    DELETE
 //	###############################################################################
 
+	/**
+	 * 유저 비활성화
+	 * @return
+	 */
 	@Role("ROLE_ADMIN")
 	@DeleteMapping(value = "/user/{no}")
 	public HttpStatus deleteUser(@PathVariable(value = "no") long userNo, HttpSession session) {
@@ -136,7 +158,11 @@ public class AdminRestController {
 		return HttpStatus.OK;
 	}
 
-//	user 권한 제거
+	/**
+	 * 해당 계정에 ROLE_USER 권한 제거
+	 * @return
+	 * @throws Exception
+	 */
 	@Role("ROLE_ADMIN")
 	@DeleteMapping(value = "/auth/user/{no}")
 	public HttpStatus rovokeRoleUser(@PathVariable("no") long userNo) throws Exception {
@@ -150,7 +176,11 @@ public class AdminRestController {
 		return HttpStatus.OK;
 	}
 
-//	admin 권한 제거
+	/**
+	 * 해당 계정에 ROLE_ADMIN 권한 제거
+	 * @return
+	 * @throws Exception
+	 */
 	@Role("ROLE_SUPER")
 	@DeleteMapping(value = "/auth/admin/{no}")
 	public HttpStatus rovokeRoleAdmin(@PathVariable("no") long userNo, HttpSession session) throws Exception {

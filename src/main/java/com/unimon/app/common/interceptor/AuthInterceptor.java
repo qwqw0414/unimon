@@ -18,6 +18,12 @@ import com.unimon.app.model.vo.Role.UserRole;
 
 import lombok.extern.slf4j.Slf4j;
 
+
+/**
+ * 해당 서비스에 사용 권한을 판단하기 위한 인터셉터
+ * @author jang
+ *
+ */
 @Slf4j
 @Component
 public class AuthInterceptor implements HandlerInterceptor {

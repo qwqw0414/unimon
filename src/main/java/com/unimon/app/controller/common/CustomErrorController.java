@@ -20,6 +20,11 @@ public class CustomErrorController implements ErrorController {
 		return "/error";
 	}
 
+	/**
+	 * 에러 페이지 핸들러
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/error")
 	public String error(HttpServletRequest request) {
 //    	
