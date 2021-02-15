@@ -1,5 +1,6 @@
 -- POKE_DML - MariaDB
 
+-- TB_POKEMON
 insert into tb_pokemon(mon_id, mon_no, mon_name, type_a, type_b, mon_opt) values('000101','001','이상해씨','풀','독',null);
 insert into tb_pokemon(mon_id, mon_no, mon_name, type_a, type_b, mon_opt) values('000201','002','이상해풀','풀','독',null);
 insert into tb_pokemon(mon_id, mon_no, mon_name, type_a, type_b, mon_opt) values('000301','003','이상해꽃','풀','독',null);
