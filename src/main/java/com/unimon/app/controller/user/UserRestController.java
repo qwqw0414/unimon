@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.unimon.app.common.exception.AppException;
+import com.unimon.app.component.SessionComp;
 import com.unimon.app.model.service.UserService;
 import com.unimon.app.model.service.UserServiceImpl;
 import com.unimon.app.model.vo.Account;
@@ -24,6 +25,9 @@ import lombok.extern.slf4j.Slf4j;
 public class UserRestController {
 
 	private Gson gson = new Gson();
+	
+	@Autowired
+	private SessionComp sessionComp;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -84,6 +88,8 @@ public class UserRestController {
 
 		session.setAttribute("account", user);
 
+		sessionComp.set(session);
+		
 		log.info("<< Login : [{}] >>", user.getUserName());
 		log.info(session.getId());
 
