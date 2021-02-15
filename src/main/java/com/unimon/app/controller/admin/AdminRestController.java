@@ -93,11 +93,6 @@ public class AdminRestController {
 	@PostMapping(value = "/auth/admin/{no}")
 	public HttpStatus grantRoleAdmin(@PathVariable("no") long userNo, HttpSession session) throws Exception {
 
-		Account account = (Account) (session.getAttribute("account"));
-
-		if (!account.hasRole(UserRole.ROLE_USER))
-			throw new ForbiddenException("ForbiddenException : super");
-
 		Map<String, Object> param = new HashMap<>();
 		param.put("userNo", userNo);
 		param.put("role", UserRole.ROLE_ADMIN);
@@ -159,11 +154,6 @@ public class AdminRestController {
 	@Role("ROLE_SUPER")
 	@DeleteMapping(value = "/auth/admin/{no}")
 	public HttpStatus rovokeRoleAdmin(@PathVariable("no") long userNo, HttpSession session) throws Exception {
-
-		Account account = (Account) (session.getAttribute("account"));
-
-		if (!account.hasRole(UserRole.ROLE_USER))
-			throw new ForbiddenException("ForbiddenException : super");
 
 		Map<String, Object> param = new HashMap<>();
 		param.put("userNo", userNo);

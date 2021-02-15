@@ -12,7 +12,9 @@ import lombok.Data;
 public @interface Role {
 	
 	public enum UserRole {
-		ROLE_SUPER, ROLE_ADMIN, ROLE_USER
+		ROLE_SUPER, 
+		ROLE_ADMIN, 
+		ROLE_USER
 	}
 
 	public String value();
