@@ -2,37 +2,44 @@ package com.unimon.app.model.dao;
 
 import java.util.List;
 
-import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
 import com.unimon.app.model.vo.Account;
-import com.unimon.app.model.vo.UserRole;
+import com.unimon.app.model.vo.Role.UserRole;
 
-@Repository
-public class UserDao {
+public interface UserDao {
 
-	@Autowired
-	private SqlSessionTemplate sst;
+	/**
+	 * 해당 아이디 수 조회
+	 * @param userId
+	 * @return
+	 */
+	int countAccountById(String userId);
 
-	public int insertUser(Account user) throws RuntimeException{
-		return sst.insert("user.insertUser", user);
-	}
+	/**
+	 * 유저 추가
+	 * @param user
+	 * @return
+	 */
+	int insertUser(Account user);
 
-	public Account selectOneUserById(String userId) throws RuntimeException {
-		return sst.selectOne("user.selectOneUserById", userId);
-	}
+	/**
+	 * 권한 추가
+	 * @param user
+	 * @return
+	 */
+	int insertAuthUser(Account user);
 
-	public int countAccountById(String userId) throws RuntimeException {
-		return sst.selectOne("user.countAccountById", userId);
-	}
+	/**
+	 * 아이디를 이용해 유저 조회
+	 * @param userId
+	 * @return 계정 정보 객체
+	 */
+	Account selectOneUserById(String userId);
 
-	public List<UserRole> selectAllAuthByNo(long userNo) {
-		return sst.selectList("user.selectAllAuthByNo", userNo);
-	}
+	/**
+	 * 유저번호를 이용해 보유한 권한 전부 조회
+	 * @param userNo
+	 * @return 권한 리스트
+	 */
+	List<UserRole> selectAllAuthByNo(long userNo);
 
-	public int insertAuthUser(Account user) {
-		return sst.insert("user.insertAuthUser", user);
-	}
-	
 }

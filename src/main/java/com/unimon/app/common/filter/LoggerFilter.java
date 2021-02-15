@@ -15,6 +15,11 @@ import com.google.gson.Gson;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 요청 로깅을 위한 필터
+ * @author jang
+ *
+ */
 @Slf4j
 @WebFilter(urlPatterns = "/*")
 public class LoggerFilter implements Filter {

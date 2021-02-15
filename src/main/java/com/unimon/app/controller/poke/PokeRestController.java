@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.unimon.app.model.service.PokeService;
+import com.unimon.app.model.service.PokeServiceImpl;
 import com.unimon.app.model.vo.Pagination;
+import com.unimon.app.model.vo.Role;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,6 +32,7 @@ public class PokeRestController {
 //									GET
 //	###############################################################################
 	
+	@Role("ROLE_USER")
 	@GetMapping(value = "/list")
 	public String searchPoke(@RequestParam(value = "page") int cPage,
 							 @RequestParam(value = "totalContents", defaultValue = "0") int totalContents,

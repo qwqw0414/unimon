@@ -12,6 +12,12 @@ import javax.servlet.annotation.WebFilter;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Account 객체 인풋 데이터 유효성 검사 필터
+ * @author jang
+ *
+ */
+
 @Slf4j
 @WebFilter(urlPatterns = "/api/user/*")
 public class AccountFilter implements Filter {

@@ -3,27 +3,20 @@ package com.unimon.app.model.service;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
+public interface PokeService {
 
-import com.unimon.app.model.dao.PokeDao;
+	/**
+	 * 키워드에 매칭된 컨텐츠 수 조회
+	 * @param param
+	 * @return
+	 */
+	int countPokeByKeword(Map<String, Object> param);
 
-@Service
-@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class, Throwable.class })
-public class PokeService {
+	/**
+	 * 키워드 매칭 조회
+	 * @param param
+	 * @return
+	 */
+	List<Map<String, Object>> searchPoke(Map<String, Object> param);
 
-	@Autowired
-	private PokeDao pokeDao;
-
-	public List<Map<String, Object>> searchPoke(Map<String, Object> param) throws RuntimeException {
-		return pokeDao.searchPokeByKeyword(param);
-	}
-
-	public int countPokeByKeword(Map<String, Object> param) throws RuntimeException {
-		return pokeDao.countPokeByKeword(param);
-	}
-
-	
 }

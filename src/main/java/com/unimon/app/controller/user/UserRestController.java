@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.unimon.app.common.exception.AppException;
+import com.unimon.app.component.SessionComp;
 import com.unimon.app.model.service.UserService;
+import com.unimon.app.model.service.UserServiceImpl;
 import com.unimon.app.model.vo.Account;
 
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +25,9 @@ import lombok.extern.slf4j.Slf4j;
 public class UserRestController {
 
 	private Gson gson = new Gson();
+	
+	@Autowired
+	private SessionComp sessionComp;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -39,6 +44,11 @@ public class UserRestController {
 //										POST
 //	###############################################################################
 	
+	/**
+	 * 회원 가입
+	 * @return
+	 * @throws Exception
+	 */
 	@PostMapping(value = "/signup")
 	public HttpStatus signup(@RequestParam("userId") String userId,
 							 @RequestParam("userName") String userName,
@@ -54,6 +64,11 @@ public class UserRestController {
 		return HttpStatus.OK;
 	}
 	
+	/**
+	 * 로그인
+	 * @return
+	 * @throws Exception
+	 */
 	@PostMapping(value = "/signin")
 	public HttpStatus signin(@RequestParam("userId") String userId,
 						 	 @RequestParam("password") String password,
@@ -73,6 +88,8 @@ public class UserRestController {
 
 		session.setAttribute("account", user);
 
+		sessionComp.set(session);
+		
 		log.info("<< Login : [{}] >>", user.getUserName());
 		log.info(session.getId());
 
