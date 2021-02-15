@@ -3,36 +3,16 @@ package com.unimon.app.model.dao;
 import java.util.List;
 import java.util.Map;
 
-import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+public interface BoardDao {
 
-import com.unimon.app.model.vo.Pagination;
+	int insertBoard(Map<String, Object> param);
 
-@Repository
-public class BoardDao {
+	Map<String, Object> selectOneBoardByNo(long boardNo);
 
-	@Autowired
-	private SqlSessionTemplate sst;
+	int deleteBoardByNo(long boardNo);
 
-	public int insertBoard(Map<String, Object> param) throws RuntimeException{
-		return sst.insert("board.insertBoard", param);
-	}
+	List<Map<String, Object>> searchBoardByKeyword(Map<String, Object> param);
 
-	public Map<String, Object> selectOneBoardByNo(long boardNo) throws RuntimeException{
-		return sst.selectOne("board.selectOneBoardByNo", boardNo);
-	}
+	int countBoardByKeyword(Map<String, Object> param);
 
-	public int deleteBoardByNo(long boardNo) throws RuntimeException {
-		return sst.update("board.deleteBoardByNo", boardNo);
-	}
-
-	public List<Map<String, Object>> searchBoardByKeyword(Map<String, Object> param) throws RuntimeException {
-		return sst.selectList("board.searchBoardByKeyword", param, ((Pagination)param.get("pagination")).getRowBounds());
-	}
-
-	public int countBoardByKeyword(Map<String, Object> param) throws RuntimeException {
-		return sst.selectOne("board.countBoardByKeyword", param);
-	}
-	
 }

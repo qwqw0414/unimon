@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -33,7 +34,7 @@ public class CustomErrorController implements ErrorController {
 //		String code = (String) request.getAttribute("errorCode");
 //		String status = (String) request.getAttribute("errorStatus");
 
-		return "error/error";
+		return "common/error";
 	}
 
 }

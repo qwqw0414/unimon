@@ -22,7 +22,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
 	private static final String[] INCLUDE_PATHS = { "/**" };
 
-	private static final String[] EXCLUDE_PATHS = { "/assets/**" };
+	private static final String[] EXCLUDE_PATHS = { "/assets/**", "/error", "/" };
 
 //	인터셉터
 	@Override

@@ -2,37 +2,19 @@ package com.unimon.app.model.dao;
 
 import java.util.List;
 
-import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
 import com.unimon.app.model.vo.Account;
 import com.unimon.app.model.vo.Role.UserRole;
 
-@Repository
-public class UserDao {
+public interface UserDao {
 
-	@Autowired
-	private SqlSessionTemplate sst;
+	int countAccountById(String userId);
 
-	public int insertUser(Account user) throws RuntimeException{
-		return sst.insert("user.insertUser", user);
-	}
+	int insertUser(Account user);
 
-	public Account selectOneUserById(String userId) throws RuntimeException {
-		return sst.selectOne("user.selectOneUserById", userId);
-	}
+	int insertAuthUser(Account user);
 
-	public int countAccountById(String userId) throws RuntimeException {
-		return sst.selectOne("user.countAccountById", userId);
-	}
+	Account selectOneUserById(String userId);
 
-	public List<UserRole> selectAllAuthByNo(long userNo) {
-		return sst.selectList("user.selectAllAuthByNo", userNo);
-	}
+	List<UserRole> selectAllAuthByNo(long userNo);
 
-	public int insertAuthUser(Account user) {
-		return sst.insert("user.insertAuthUser", user);
-	}
-	
 }

@@ -3,48 +3,33 @@ package com.unimon.app.model.service;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
+public interface AdminService {
 
-import com.unimon.app.common.exception.AppException;
-import com.unimon.app.model.dao.AdminDao;
+	/**
+	 * 계정 조회
+	 * @return	게정 객체
+	 */
+	List<Map<String, Object>> searchAccount(Map<String, Object> param);
 
-@Service
-@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class, Throwable.class })
-public class AdminService {
+	/**
+	 * 유저 권한 부여
+	 */
+	void grantRole(Map<String, Object> param);
 
-	@Autowired
-	private AdminDao adminDao;
+	/**
+	 * 해당 유저번호의 보유 권한을 조회
+	 * @return	보유한 권한 객체
+	 */
+	List<Map<String, Object>> searchUserAuth(long userNo);
 
-	public void grantRole(Map<String, Object> param) throws RuntimeException {
+	/**
+	 * 유저번호의 계정을 비활성화
+	 */
+	void deleteUser(long userNo);
 
-		if (adminDao.countRole(param) != 0)
-			throw new AppException("Duplicate Role");
-		
-		if(adminDao.insertAuth(param) == 0)
-			throw new AppException("Failed Insert Auth");
-
-	}
-
-	public void revokeRole(Map<String, Object> param) throws RuntimeException {
-		
-		if (adminDao.deleteAuth(param) == 0)
-			throw new AppException("Failed Delete Auth");
-	}
-
-	public List<Map<String, Object>> searchAccount(Map<String, Object> param) throws RuntimeException {
-		return adminDao.searchUserByKeyword(param);
-	}
-
-	public List<Map<String, Object>> searchUserAuth(long userNo) throws RuntimeException {
-		return adminDao.selectAllAuthByNo(userNo);
-	}
-
-	public void deleteUser(long userNo) throws RuntimeException{
-		if (adminDao.deleteUserByNo(userNo) == 0)
-			throw new AppException("Failed Delete user");
-	}
+	/**
+	 * 유저권한 제거 
+	 */
+	void revokeRole(Map<String, Object> param);
 
 }

@@ -1,48 +1,35 @@
 package com.unimon.app.model.service;
 
-import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
+public interface BoardService {
 
-import com.unimon.app.common.exception.AppException;
-import com.unimon.app.model.dao.BoardDao;
+	/**
+	 * 게시글 번호를 이용해 조회
+	 * @return	게시글 객체
+	 */
+	Map<String, Object> readBoard(long boardNo);
 
-@Service
-@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class, Throwable.class })
-public class BoardService {
+	/**
+	 * 게시글의 총 컨텐츠 수 조회
+	 * @return	총 컨텐츠 수
+	 */
+	int getTotalContents(Map<String, Object> param);
 
-	@Autowired
-	private BoardDao boardDao;
+	/**
+	 * 게시글 서칭 
+	 * @return	키워드 매칭된 개시글 리스트
+	 */
+	Object searchBoard(Map<String, Object> param);
 
-	public void boardWrite(Map<String, Object> param) throws RuntimeException {
-		
-		param.put("attachment_cnt", 0);
-		
-		if(boardDao.insertBoard(param) == 0)
-			throw new AppException("Failed Board Insert");
-		
-	}
+	/**
+	 * 게시글 작성 
+	 */
+	void boardWrite(Map<String, Object> param);
 
-	public Map<String, Object> readBoard(long boardNo) throws RuntimeException {
-		return boardDao.selectOneBoardByNo(boardNo);
-	}
+	/**
+	 * 게시글 삭제
+	 */
+	void removeBoard(long boardNo);
 
-	public void removeBoard(long boardNo) throws RuntimeException{
-		if(boardDao.deleteBoardByNo(boardNo) == 0)
-			throw new AppException("Failed Board Delete");
-	}
-
-	public List<Map<String, Object>> searchBoard(Map<String, Object> param) throws RuntimeException {
-		return boardDao.searchBoardByKeyword(param);
-	}
-
-	public int getTotalContents(Map<String, Object> param) throws RuntimeException {
-		return boardDao.countBoardByKeyword(param);
-	}
-	
-	
 }
