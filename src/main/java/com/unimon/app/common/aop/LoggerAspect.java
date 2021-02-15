@@ -14,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class LoggerAspect {
 
+	private static final int REP_DOT = "com.unimon.app.".length();
+	
 	@Pointcut("execution(* com.unimon.app..*.*(..)) && !execution(* com.unimon.app.common..*.*(..))")
 	public void pointcut() {}
 
@@ -23,8 +25,8 @@ public class LoggerAspect {
 		String type = signature.getDeclaringTypeName();
 		String methodName = signature.getName();
 		
-		final String REP = "com.unimon.app.";
-		type = type.replace(REP, "");
+//		공통 경로 제외
+		type = type.substring(REP_DOT);
 		
 		log.debug(">> {}.{} >>", type, methodName);
 		

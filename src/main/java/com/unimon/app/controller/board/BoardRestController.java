@@ -20,8 +20,9 @@ import com.google.gson.Gson;
 import com.unimon.app.common.exception.ForbiddenException;
 import com.unimon.app.model.service.BoardService;
 import com.unimon.app.model.vo.Account;
+import com.unimon.app.model.vo.Role.UserRole;
 import com.unimon.app.model.vo.Pagination;
-import com.unimon.app.model.vo.UserRole;
+import com.unimon.app.model.vo.Role;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,7 +39,8 @@ public class BoardRestController {
 //	###############################################################################
 //										GET
 //  ###############################################################################
-
+	
+	@Role("ROLE_USER")
 	@GetMapping(value = "/view/{no}")
 	public String readBoard(@PathVariable("no") long boardNo) throws Exception {
 
@@ -47,6 +49,7 @@ public class BoardRestController {
 		return gson.toJson(result);
 	}
 
+	@Role("ROLE_USER")
 	@GetMapping(value = "/list")
 	public String searchBoard( @RequestParam(value = "keyword", defaultValue = "") String keyword,
 							   @RequestParam(value = "cPage", defaultValue = "1") int cPage) throws Exception {
@@ -72,6 +75,7 @@ public class BoardRestController {
 //    									POST
 //  ###############################################################################
 
+	@Role("ROLE_USER")
 	@PostMapping(value = "/write")
 	public HttpStatus boardWrite(@RequestParam("title") String title, @RequestParam("contents") String contents,
 			HttpSession session) throws Exception {
@@ -100,6 +104,7 @@ public class BoardRestController {
 //    									DELETE
 //  ###############################################################################
 
+	@Role("ROLE_USER")
 	@DeleteMapping(value = "/board/{no}")
 	public HttpStatus removeBoard(@PathVariable("no") long boardNo, HttpSession session) throws Exception{
 		

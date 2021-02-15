@@ -21,8 +21,9 @@ import com.unimon.app.common.exception.AppException;
 import com.unimon.app.common.exception.ForbiddenException;
 import com.unimon.app.model.service.AdminService;
 import com.unimon.app.model.vo.Account;
+import com.unimon.app.model.vo.Role.UserRole;
 import com.unimon.app.model.vo.Pagination;
-import com.unimon.app.model.vo.UserRole;
+import com.unimon.app.model.vo.Role;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,6 +41,7 @@ public class AdminRestController {
 //										GET
 //	###############################################################################
 
+	@Role("ROLE_ADMIN")
 	@GetMapping(value = "/auth/{no}")
 	public String searchUserAuth(@PathVariable(value = "no") long userNo) throws Exception {
 
@@ -48,6 +50,7 @@ public class AdminRestController {
 		return gson.toJson(result);
 	}
 
+	@Role("ROLE_ADMIN")
 	@GetMapping(value = "/user")
 	public String searchUserList(@RequestParam(value = "keyword", defaultValue = "") String keyword,
 								 @RequestParam(value = "cPage", defaultValue = "1") int cPage) throws Exception {
@@ -71,6 +74,7 @@ public class AdminRestController {
 //	###############################################################################
 
 //	user 권한 부여
+	@Role("ROLE_ADMIN")
 	@PostMapping(value = "/auth/user/{no}")
 	public HttpStatus grantRoleUser(@PathVariable("no") long userNo) throws Exception {
 
@@ -84,6 +88,7 @@ public class AdminRestController {
 	}
 
 //	admin 권한 부여
+	@Role("ROLE_SUPER")
 	@PostMapping(value = "/auth/admin/{no}")
 	public HttpStatus grantRoleAdmin(@PathVariable("no") long userNo, HttpSession session) throws Exception {
 
@@ -108,6 +113,7 @@ public class AdminRestController {
 //									    DELETE
 //	###############################################################################
 
+	@Role("ROLE_ADMIN")
 	@DeleteMapping(value = "/user/{no}")
 	public HttpStatus deleteUser(@PathVariable(value = "no") long userNo, HttpSession session) {
 
@@ -135,6 +141,7 @@ public class AdminRestController {
 	}
 
 //	user 권한 제거
+	@Role("ROLE_ADMIN")
 	@DeleteMapping(value = "/auth/user/{no}")
 	public HttpStatus rovokeRoleUser(@PathVariable("no") long userNo) throws Exception {
 
@@ -148,6 +155,7 @@ public class AdminRestController {
 	}
 
 //	admin 권한 제거
+	@Role("ROLE_SUPER")
 	@DeleteMapping(value = "/auth/admin/{no}")
 	public HttpStatus rovokeRoleAdmin(@PathVariable("no") long userNo, HttpSession session) throws Exception {
 

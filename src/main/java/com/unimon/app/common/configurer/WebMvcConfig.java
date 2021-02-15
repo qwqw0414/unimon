@@ -20,9 +20,9 @@ import lombok.extern.slf4j.Slf4j;
 @EnableWebMvc
 public class WebMvcConfig implements WebMvcConfigurer {
 
-	private static final String[] INCLUDE_PATHS = { "/api/*", "/user/*", "/admin/*", "/board/*" };
+	private static final String[] INCLUDE_PATHS = { "/**" };
 
-	private static final String[] EXCLUDE_PATHS = { "/api/user/signin", "/api/user/signup" };
+	private static final String[] EXCLUDE_PATHS = { "/assets/**" };
 
 //	인터셉터
 	@Override

@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import com.unimon.app.model.vo.Role.UserRole;
+
 import lombok.Data;
 
 @Data
