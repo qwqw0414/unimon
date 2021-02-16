@@ -1,20 +1,28 @@
 package com.unimon.app.controller.poke;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
-import com.unimon.app.model.service.PokeService;
-import com.unimon.app.model.service.PokeServiceImpl;
-import com.unimon.app.model.vo.Pagination;
-import com.unimon.app.model.vo.Role;
+import com.unimon.app.common.exception.AppException;
+import com.unimon.app.component.PropComp;
+import com.unimon.app.service.poke.PokeService;
+import com.unimon.app.service.poke.PokeServiceImpl;
+import com.unimon.app.vo.Account;
+import com.unimon.app.vo.Pagination;
+import com.unimon.app.vo.PickPoint;
+import com.unimon.app.vo.Role;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,6 +32,9 @@ import lombok.extern.slf4j.Slf4j;
 public class PokeRestController {
 
 	private Gson gson = new Gson();
+	
+	@Autowired
+	private PropComp propComp;
 	
 	@Autowired
 	private PokeService pokeService;
@@ -67,6 +78,31 @@ public class PokeRestController {
 //									POST
 //	###############################################################################
 	
+	@Role("ROLE_USER")
+	@PostMapping("/pick")
+	public String pick(@RequestParam(value = "type") String type, 
+					   @RequestParam(value = "amount", defaultValue = "1") int amount,
+					   HttpSession session) throws Exception {
+		
+//		long userNo = ((Account)session.getAttribute("account")).getUserNo();
+		
+		Map<String, Object> param = new HashMap<>();
+//		param.put("userNo", userNo);
+		param.put("type", type);
+		param.put("amount", amount);
+		
+		List<PickPoint> pointList = pokeService.getPickList(type);
+		
+		if(amount < 1)
+			throw new AppException("Invalid Value : amount < 1");
+		
+		List<String> pickList = propComp.get(pointList, amount);
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("list", pickList);
+		
+		return gson.toJson(result);
+	}
 	
 //	###############################################################################
 //									PUT

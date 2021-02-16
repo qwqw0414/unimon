@@ -1,4 +1,4 @@
-package com.unimon.app.model.vo;
+package com.unimon.app.vo;
 
 import org.apache.ibatis.session.RowBounds;
 

@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.unimon.app.common.exception.ForbiddenException;
-import com.unimon.app.model.service.BoardService;
-import com.unimon.app.model.service.BoardServiceImpl;
-import com.unimon.app.model.vo.Account;
-import com.unimon.app.model.vo.Role.UserRole;
-import com.unimon.app.model.vo.Pagination;
-import com.unimon.app.model.vo.Role;
+import com.unimon.app.service.board.BoardService;
+import com.unimon.app.service.board.BoardServiceImpl;
+import com.unimon.app.vo.Account;
+import com.unimon.app.vo.Pagination;
+import com.unimon.app.vo.Role;
+import com.unimon.app.vo.Role.UserRole;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,4 +1,4 @@
-package com.unimon.app.model.service;
+package com.unimon.app.service.board;
 
 import java.util.Map;
 

@@ -1,7 +1,9 @@
-package com.unimon.app.model.service;
+package com.unimon.app.service.poke;
 
 import java.util.List;
 import java.util.Map;
+
+import com.unimon.app.vo.PickPoint;
 
 public interface PokeService {
 
@@ -18,5 +20,7 @@ public interface PokeService {
 	 * @return
 	 */
 	List<Map<String, Object>> searchPoke(Map<String, Object> param);
+
+	List<PickPoint> getPickList(String type);
 
 }

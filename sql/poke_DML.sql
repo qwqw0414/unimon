@@ -1,5 +1,64 @@
 -- POKE_DML - MariaDB
 
+-- DELETE FORM TB_USER;
+-- DELETE FROM TB_BOARD;
+
+INSERT INTO TB_USER (USER_ID, USER_NAME, PASSWORD) VALUES ('SUADMIN', 'SUDO' ,'$2A$10$CWL13FXG88HS1UXUGOSATECKSWPGI7UX9W7/5LQKCRBA8PSX5ODLE');
+
+-- ###########################################################
+-- 						TB_PICK_POINT
+-- ###########################################################
+
+-- N
+INSERT INTO TB_PICK_POINT (CODE, RARE, RARITY) values('N', 'R1', 1);
+-- S
+INSERT INTO TB_PICK_POINT (CODE, RARE, RARITY) values('S', 'R1', 4);
+INSERT INTO TB_PICK_POINT (CODE, RARE, RARITY) values('S', 'R2', 1);
+-- G
+INSERT INTO TB_PICK_POINT (CODE, RARE, RARITY) values('G', 'R1', 4);
+INSERT INTO TB_PICK_POINT (CODE, RARE, RARITY) values('G', 'R2', 2);
+INSERT INTO TB_PICK_POINT (CODE, RARE, RARITY) values('G', 'R3', 1);
+-- M
+INSERT INTO TB_PICK_POINT (CODE, RARE, RARITY) values('M', 'R1', 4);
+INSERT INTO TB_PICK_POINT (CODE, RARE, RARITY) values('M', 'R2', 3);
+INSERT INTO TB_PICK_POINT (CODE, RARE, RARITY) values('M', 'R3', 2);
+INSERT INTO TB_PICK_POINT (CODE, RARE, RARITY) values('M', 'R4', 1);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 -- TB_POKEMON
 insert into tb_pokemon(mon_id, mon_no, mon_name, type_a, type_b, mon_opt) values('000101','001','이상해씨','풀','독',null);
 insert into tb_pokemon(mon_id, mon_no, mon_name, type_a, type_b, mon_opt) values('000201','002','이상해풀','풀','독',null);

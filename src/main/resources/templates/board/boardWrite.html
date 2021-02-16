@@ -38,7 +38,7 @@ $(()=>{
     var $writeBoard = $("#writeBoard");
 
     // Set Modal
-    setModal("작성 확인","DEC","writeModal");
+    setModal("작성 확인","DEC","writeModal", boardWrite);
 
     // $btnWrite.on("click", () => { showModal("writeModal") });
 
@@ -60,7 +60,7 @@ $(()=>{
     });
 
     $("#writeModal #modal-ok").on("click",()=>{
-        boardWrite($title.val(), $writeBoard.summernote('code'));
+        boardWrite();
     });
 
     $writeBoard.summernote({
@@ -72,12 +72,12 @@ $(()=>{
         placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
     });
 
-    function boardWrite(title , contents){
+    function boardWrite(){
 
         var data = {
             // _method : 'post',
-            title : title,
-            contents : contents
+            title : $title.val(),
+            contents : $writeBoard.summernote('code')
         };
 
         $.ajax({

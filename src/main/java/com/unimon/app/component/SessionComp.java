@@ -35,4 +35,8 @@ public class SessionComp {
 		return sessionList.remove(session.getId()) != null;
 	}
 
+	public boolean isVaild(HttpSession session) {
+		return sessionList.containsKey(session.getId());
+	}
+	
 }

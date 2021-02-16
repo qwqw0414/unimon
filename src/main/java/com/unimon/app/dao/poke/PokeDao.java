@@ -1,7 +1,9 @@
-package com.unimon.app.model.dao;
+package com.unimon.app.dao.poke;
 
 import java.util.List;
 import java.util.Map;
+
+import com.unimon.app.vo.PickPoint;
 
 public interface PokeDao {
 
@@ -18,5 +20,7 @@ public interface PokeDao {
 	 * @return
 	 */
 	List<Map<String, Object>> searchPokeByKeyword(Map<String, Object> param);
+
+	List<PickPoint> selectAllPickPointByCode(String code);
 
 }

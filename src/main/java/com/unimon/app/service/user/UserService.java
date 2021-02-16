@@ -1,6 +1,6 @@
-package com.unimon.app.model.service;
+package com.unimon.app.service.user;
 
-import com.unimon.app.model.vo.Account;
+import com.unimon.app.vo.Account;
 
 public interface UserService {
 

@@ -1,10 +1,10 @@
-package com.unimon.app.model.vo;
+package com.unimon.app.vo;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import com.unimon.app.model.vo.Role.UserRole;
+import com.unimon.app.vo.Role.UserRole;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.unimon.app.model.service;
+package com.unimon.app.service.admin;
 
 import java.util.List;
 import java.util.Map;

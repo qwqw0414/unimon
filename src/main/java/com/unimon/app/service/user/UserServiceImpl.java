@@ -1,4 +1,4 @@
-package com.unimon.app.model.service;
+package com.unimon.app.service.user;
 
 import java.util.List;
 
@@ -8,9 +8,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.unimon.app.common.exception.AppException;
-import com.unimon.app.model.dao.UserDao;
-import com.unimon.app.model.dao.UserDaoImpl;
-import com.unimon.app.model.vo.Account;
+import com.unimon.app.dao.user.UserDao;
+import com.unimon.app.dao.user.UserDaoImpl;
+import com.unimon.app.vo.Account;
 
 
 @Service
@@ -19,7 +19,8 @@ public class UserServiceImpl implements UserService{
 
 	@Autowired
 	private UserDao userDao;
-
+	
+	@Override
 	public void signup(Account user) throws RuntimeException {
 
 //		아이디 중복 검사
@@ -34,6 +35,7 @@ public class UserServiceImpl implements UserService{
 		
 	}
 
+	@Override
 	public Account getAccountById(String userId) throws RuntimeException{
 		
 		Account account = userDao.selectOneUserById(userId);

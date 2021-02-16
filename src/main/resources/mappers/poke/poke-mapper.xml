@@ -31,6 +31,14 @@
 	
 	</select>
 
+	<select id="selectAllPickPointByCode" parameterType="string" resultType="PickPoint">
+	
+		SELECT * 
+		FROM TB_PICK_POINT 
+		WHERE CODE = #{code}
+	
+	</select>
+
 <!-- ##################################################### -->
 <!-- 						INSERT 						   -->
 <!-- ##################################################### -->

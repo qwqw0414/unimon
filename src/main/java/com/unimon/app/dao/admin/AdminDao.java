@@ -1,4 +1,4 @@
-package com.unimon.app.model.dao;
+package com.unimon.app.dao.admin;
 
 import java.util.List;
 import java.util.Map;

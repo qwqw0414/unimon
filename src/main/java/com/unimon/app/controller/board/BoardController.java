@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.unimon.app.model.service.BoardService;
-import com.unimon.app.model.service.BoardServiceImpl;
-import com.unimon.app.model.vo.Role;
+import com.unimon.app.service.board.BoardService;
+import com.unimon.app.service.board.BoardServiceImpl;
+import com.unimon.app.vo.Role;
 
 @Controller()
 @RequestMapping(value = "/board")

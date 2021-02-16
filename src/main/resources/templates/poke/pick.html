@@ -18,11 +18,11 @@
         </a>
     </div>
 
-    <div class="row">
-        <div class="col-lg-6">
+    <div class="row" id="resultTable">
+        <div class="col">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Circle Buttons</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Result</h6>
                 </div>
                 <div class="card-body">
 
@@ -31,11 +31,168 @@
         </div>
     </div>
 
+    <div class="row">
+
+        <!-- #1 -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-danger shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                                type 1</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">$1</div>
+                        </div>
+                        <div class="col-auto">
+                            <input type="hidden" value="N">
+                            <button class="btn btn-danger">
+                                <i class="fas fa-donate fa-2x"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- #2 -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                type 2</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">$2</div>
+                        </div>
+                        <div class="col-auto">
+                            <input type="hidden" value="S">
+                            <button class="btn btn-primary">
+                                <i class="fas fa-donate fa-2x"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- #3 -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                type 3</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">$4</div>
+                        </div>
+                        <div class="col-auto">
+                            <input type="hidden" value="G">
+                            <button class="btn btn-warning">
+                                <i class="fas fa-donate fa-2x"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- #4 -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                type 4</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">$8</div>
+                        </div>
+                        <div class="col-auto">
+                            <input type="hidden" value="M">
+                            <button class="btn btn-info">
+                                <i class="fas fa-donate fa-2x"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 </div>
 
 <script layout:fragment="script">
 // JS Start !!
+$(()=>{
+    // 객체 상수 
+    const $pickBtn = $cont.find(".card-body .col-auto .btn");
+    const $resultTable = $cont.find("#resultTable");
 
+    let type;
+
+    // 이벤트 핸들링
+    $pickBtn.on("click", (e)=>{
+        type = $(e.target).parents("div.col-auto").find("input[type=hidden]").val();
+        showModal('modal-pick');
+    });
+    
+    function pick(){
+        var param = {
+            type : type,
+            amount : 5,
+        }
+
+        $.ajax({
+            url: "/api/poke/pick",
+            type: "post",
+            dataType: "json",
+            data: param,
+            success: (result) => {
+
+                console.log(result);
+
+                let html = "";
+
+                html += '<div class="row">';
+
+                result.list.forEach(i => {
+                    html += '<div class="col-lg-2 mb-4">';
+                    html += '<div class="card bg-' + getCardColor(i) + ' text-white shadow">';
+                    html += '<div class="card-body">';
+                    html += i;
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</div>';
+                });
+
+                html += '</div>';
+
+                $resultTable.find(".card-body").html(html);
+            },
+            complete: () => {
+
+            },
+            error: (e) => {
+                console.log(e);
+
+            }
+        });
+        
+    }
+
+    function getCardColor(code){
+        let list = {
+            "R1" : "danger",
+            "R2" : "primary",
+            "R3" : "warning",
+            "R4" : "info"
+        }
+        return list[code];
+    }
+
+    // 모달 생성
+    setModal('test','test','modal-pick', pick);
+});
 </script>
 
 </html>

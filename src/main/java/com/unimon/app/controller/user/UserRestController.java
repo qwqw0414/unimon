@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 import com.unimon.app.common.exception.AppException;
 import com.unimon.app.component.SessionComp;
-import com.unimon.app.model.service.UserService;
-import com.unimon.app.model.service.UserServiceImpl;
-import com.unimon.app.model.vo.Account;
+import com.unimon.app.service.user.UserService;
+import com.unimon.app.service.user.UserServiceImpl;
+import com.unimon.app.vo.Account;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -86,12 +86,11 @@ public class UserRestController {
 		if (!passwordEncoder.matches(param.getPassword(), user.getPassword()))
 			throw new AppException("Invalid Password");
 
+//		세션 데이터 저장
 		session.setAttribute("account", user);
-
 		sessionComp.set(session);
 		
 		log.info("<< Login : [{}] >>", user.getUserName());
-		log.info(session.getId());
 
 		return HttpStatus.OK;
 	}

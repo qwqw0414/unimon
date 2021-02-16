@@ -1,5 +1,4 @@
-
-function setModal(title, msg, id){
+function setModal(title, msg, id, event){
 
     var html = '<div class="modal fade" id="' + (id === undefined ? 'msgModal' : id) + '">';
     html += '<div class="modal-dialog ' + (id === undefined ? '' : 'modal-dialog-centered') + '"><div class="modal-content">';
@@ -14,12 +13,17 @@ function setModal(title, msg, id){
     }
     else{
         html += '<button class="btn btn-secondary" style="width:80px;" type="button" data-dismiss="modal">Cancel</button>';
-        html += '<a class="btn btn-info text-light" style="width:80px;" data-dismiss="modal" id="modal-ok">Ok</a>';
+        html += '<button class="btn btn-info text-light" style="width:80px;" data-dismiss="modal" id="modal-ok">Ok</button>';
     }
 
     html += '</div></div></div></div>';
 
     $("#modal-contents").append(html);
+
+    if(event !== undefined){
+        $("#modal-contents #" + id + " #modal-ok").on("click", event);
+    }
+
 }
 
 function showModal(id){

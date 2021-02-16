@@ -6,15 +6,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.unimon.app.common.exception.ForbiddenException;
 import com.unimon.app.common.exception.UnauthorizedException;
-import com.unimon.app.model.vo.Account;
-import com.unimon.app.model.vo.Role;
-import com.unimon.app.model.vo.Role.UserRole;
+import com.unimon.app.component.SessionComp;
+import com.unimon.app.vo.Account;
+import com.unimon.app.vo.Role;
+import com.unimon.app.vo.Role.UserRole;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,6 +32,9 @@ public class AuthInterceptor implements HandlerInterceptor {
 
 	private static final String ADMIN_URL = "/admin";
 
+	@Autowired
+	private SessionComp sessionComp;
+	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
@@ -79,31 +84,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 //		권한 체크
 		if(!account.hasRole(methodRole.value()))
 			throw new ForbiddenException("Forbidden");
-		
-//		어드민 권한 보유 여부
-//		if (isRolePath(url, ADMIN_URL) && !account.hasRole(UserRole.ROLE_ADMIN))
-//			throw new ForbiddenException("Forbidden : Admin");
-
-//		유저 권한 보유 여부
-//		if (!account.hasRole(UserRole.ROLE_USER))
-//			throw new ForbiddenException("Forbidden : User");
 
 		return HandlerInterceptor.super.preHandle(request, response, handler);
 	}
-
-//	URL 확인
-	private boolean isRolePath(String url, String role) {
-		try {
-
-			if (url.contains("/api"))
-				url = url.substring(4, 4 + role.length());
-			else
-				url = url.substring(0, role.length());
-			return role.equals(url);
-			
-		} catch (Exception e) {
-			return false;
-		}
-	}
-
 }
