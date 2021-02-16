@@ -23,4 +23,6 @@ public interface PokeService {
 
 	List<PickPoint> getPickList(String type);
 
+	List<Map<String, Object>> getListPokeByRare(String rare);
+
 }

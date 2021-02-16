@@ -139,7 +139,7 @@ $(()=>{
     function pick(){
         var param = {
             type : type,
-            amount : 5,
+            amount : 6,
         }
 
         $.ajax({
@@ -155,12 +155,17 @@ $(()=>{
 
                 html += '<div class="row">';
 
-                result.list.forEach(i => {
+                result.forEach(i => {
                     html += '<div class="col-lg-2 mb-4">';
-                    html += '<div class="card bg-' + getCardColor(i) + ' text-white shadow">';
+                    html += '<div class="card border-bottom-' + getCardColor(i.rare) + ' text-dark shadow">';
+
                     html += '<div class="card-body">';
-                    html += i;
+                    html += '<img class="img-fluid ball wobble-hor-bottom" src="/assets/img/ball/' + getBall(i.rare) + '.png" alt="">';
+                    
+                    html += '<img class="img-fluid swirl-in-fwd mon" hidden src="/assets/img/mon/' + i.mon_id + '.png" alt="">';
+                    html += '<div class="h5 mb-0 font-weight-bold text-gray-800" hidden>' + i.mon_name + '</div>'
                     html += '</div>';
+
                     html += '</div>';
                     html += '</div>';
                 });
@@ -168,6 +173,13 @@ $(()=>{
                 html += '</div>';
 
                 $resultTable.find(".card-body").html(html);
+
+                $resultTable.find("img.ball").on("click", (e)=>{
+                    var $e = $(e.target);
+                    $e.parent(".card-body").children("img.mon").prop("hidden", false);
+                    $e.parent(".card-body").children("div").prop("hidden", false);
+                    $e.hide();
+                });
             },
             complete: () => {
 
@@ -178,6 +190,17 @@ $(()=>{
             }
         });
         
+    }
+
+    function getBall(data){
+        let list = {
+            "R1" : "ball_n",
+            "R2" : "ball_s",
+            "R3" : "ball_g",
+            "R4" : "ball_m"
+        }
+
+        return list[data];
     }
 
     function getCardColor(code){

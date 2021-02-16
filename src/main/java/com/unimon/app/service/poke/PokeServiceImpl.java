@@ -1,5 +1,7 @@
 package com.unimon.app.service.poke;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,9 +15,14 @@ import com.unimon.app.dao.poke.PokeDao;
 import com.unimon.app.dao.poke.PokeDaoImpl;
 import com.unimon.app.vo.PickPoint;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 @Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class, Throwable.class })
 public class PokeServiceImpl implements PokeService {
+
+	private static Map<String, List<Map<String, Object>>> pokeRareMap = new HashMap<>();
 
 	@Autowired
 	private PokeDao pokeDao;
@@ -31,15 +38,24 @@ public class PokeServiceImpl implements PokeService {
 	}
 
 	@Override
-	public List<PickPoint> getPickList(String code) throws RuntimeException{
-		
+	public List<PickPoint> getPickList(String code) throws RuntimeException {
+
 		List<PickPoint> result = pokeDao.selectAllPickPointByCode(code);
-		
-		if(result == null)
+
+		if (result == null)
 			throw new AppException("Not Found Picklist");
-			
+
 		return result;
 	}
 
-	
+	@Override
+	public List<Map<String, Object>> getListPokeByRare(String rare) throws RuntimeException {
+		
+		if (!pokeRareMap.containsKey(rare)) {
+			pokeRareMap.put(rare, pokeDao.selectListPokeByRare(rare));
+		}
+		
+		return pokeRareMap.get(rare);
+	}
+
 }

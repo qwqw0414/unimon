@@ -39,6 +39,17 @@
 	
 	</select>
 
+	<select id="selectListPokeByRare" parameterType="string" resultType="map">
+	
+		SELECT tp.mon_id, 
+			   tp.mon_no, 
+			   tp.mon_name, 
+			   tpr.rare 
+	    FROM tb_pokemon tp JOIN tb_pokemon_ref tpr ON tp.MON_ID = tpr.MON_ID 
+	    WHERE RARE = #{rare}
+	
+	</select>
+
 <!-- ##################################################### -->
 <!-- 						INSERT 						   -->
 <!-- ##################################################### -->

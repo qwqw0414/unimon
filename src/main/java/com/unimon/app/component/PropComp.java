@@ -12,10 +12,17 @@ import com.unimon.app.vo.PickPoint;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Component
+@Component(value = "PropComp")
 public class PropComp {
 
-	public String get(List<PickPoint> list) throws Exception {
+	public Map<String, Object> getPoke(List<Map<String, Object>> list) throws Exception {
+		
+		int index = (int)(Math.random() * list.size());
+		
+		return list.get(index);
+	}
+	
+	public String getRare(List<PickPoint> list) throws Exception {
 		
 		if(list == null || list.size() == 0)
 			throw new AppException("Exist List");
@@ -44,7 +51,7 @@ public class PropComp {
 		List<String> result = new ArrayList<>();
 		
 		for(int i = 0; i < amount; i++) {
-			result.add(this.get(list));
+			result.add(this.getRare(list));
 		}
 		
 		return result;

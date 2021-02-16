@@ -32,5 +32,10 @@ public class PokeDaoImpl implements PokeDao{
 		return sst.selectList("poke.selectAllPickPointByCode", code);
 	}
 
+	@Override
+	public List<Map<String, Object>> selectListPokeByRare(String rare) throws RuntimeException {
+		return sst.selectList("poke.selectListPokeByRare", rare);
+	}
+
 	
 }

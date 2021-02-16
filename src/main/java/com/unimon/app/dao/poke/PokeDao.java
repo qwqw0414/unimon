@@ -23,4 +23,6 @@ public interface PokeDao {
 
 	List<PickPoint> selectAllPickPointByCode(String code);
 
+	List<Map<String, Object>> selectListPokeByRare(String rare);
+
 }

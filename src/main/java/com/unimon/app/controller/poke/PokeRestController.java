@@ -96,13 +96,29 @@ public class PokeRestController {
 		if(amount < 1)
 			throw new AppException("Invalid Value : amount < 1");
 		
-		List<String> pickList = propComp.get(pointList, amount);
 		
-		Map<String, Object> result = new HashMap<>();
-		result.put("list", pickList);
+		List<String> pickList = propComp.get(pointList, amount);
+		String[] rareArr = {"R1", "R2", "R3", "R4"};
+
+		Map<String, List<Map<String, Object>>> pokeList = new HashMap<>();
+
+		for (int i = 0; i < rareArr.length; i++) {
+			
+			String rare = rareArr[i];
+			
+			if(pickList.contains(rare))
+				pokeList.put(rare, pokeService.getListPokeByRare(rare));
+		}
+		
+		List<Map<String, Object>> result = new ArrayList<>();
+		
+		for(String rare : pickList) {
+			result.add(propComp.getPoke(pokeList.get(rare)));
+		}
 		
 		return gson.toJson(result);
 	}
+
 	
 //	###############################################################################
 //									PUT

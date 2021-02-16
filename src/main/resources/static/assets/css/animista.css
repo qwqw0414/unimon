@@ -7,8 +7,8 @@
 
 	
  .fade-in{-webkit-animation:fade-in 1.2s cubic-bezier(.39,.575,.565,1.000) both;animation:fade-in 1.2s cubic-bezier(.39,.575,.565,1.000) both}
-
-
+ .swirl-in-fwd{-webkit-animation:swirl-in-fwd .6s ease-out both;animation:swirl-in-fwd .6s ease-out both}
+ .wobble-hor-bottom{-webkit-animation:wobble-hor-bottom 1s infinite both;animation:wobble-hor-bottom 1s infinite both}
 /**
  * ----------------------------------------
  * animation bounce-top
