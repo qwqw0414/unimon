@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
+import com.unimon.app.common.exception.AppException;
+
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -21,7 +23,7 @@ public class CashDataComp {
 	@SuppressWarnings("unchecked")
 	public List<Map<String, Object>> getList(String key) throws RuntimeException {
 
-		Object obj = dataMap.get(key);
+		Object obj = this.getObject(key);
 		
 		if(obj != null && obj instanceof List) {
 			return (List<Map<String, Object>>) obj;
@@ -31,13 +33,21 @@ public class CashDataComp {
 	}
 
 	public Object getObject(String key) throws RuntimeException {
-		return dataMap.get(key);
+		
+		Object obj = dataMap.get(key);
+		
+		if(obj == null)
+			throw new AppException("Get dataMap is Null");
+		
+		log.debug("Get dataMap : {}", key);
+		
+		return obj;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public Map<String, Object> getMap(String key) throws RuntimeException {
 
-		Object obj = dataMap.get(key);
+		Object obj = this.getObject(key);
 		
 		if(obj != null && obj instanceof Map) {
 			return (Map<String, Object>) obj;
@@ -47,6 +57,7 @@ public class CashDataComp {
 	}
 	
 	public void set(String key, Object obj) throws RuntimeException {
+		log.info("dataMap set : {}", key);
 		dataMap.put(key, obj);
 	}
 
