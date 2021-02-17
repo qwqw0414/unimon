@@ -39,7 +39,6 @@ public class UserRestController {
 //										GET
 //	###############################################################################
 	
-	
 //	###############################################################################
 //										POST
 //	###############################################################################
@@ -92,6 +91,22 @@ public class UserRestController {
 		
 		log.info("<< Login : [{}] >>", user.getUserName());
 
+		return HttpStatus.OK;
+	}
+	
+	/**
+	 * 로그아웃
+	 * @param session
+	 * @return
+	 */
+	@PostMapping(value = "/signout")
+	public HttpStatus signout(HttpSession session) throws Exception {
+		
+		sessionComp.remove(session);
+		
+		session.removeAttribute("account");
+		session.invalidate();
+		
 		return HttpStatus.OK;
 	}
 	

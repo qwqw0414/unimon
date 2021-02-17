@@ -12,21 +12,28 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.unimon.app.common.interceptor.AuthInterceptor;
+import com.unimon.app.common.interceptor.SessionInterceptor;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Configuration
 @EnableWebMvc
+@Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
 	private static final String[] INCLUDE_PATHS = { "/**" };
 
-	private static final String[] EXCLUDE_PATHS = { "/assets/**", "/error", "/" };
+	private static final String[] EXCLUDE_PATHS = { "/assets/**", "/error"};
 
 //	인터셉터
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
+		
+//		세션 관리 인터셉터
+		registry.addInterceptor(new SessionInterceptor()).addPathPatterns(INCLUDE_PATHS)
+		.excludePathPatterns(EXCLUDE_PATHS);
+		
+//		권한 관리 인터셉터
 		registry.addInterceptor(new AuthInterceptor()).addPathPatterns(INCLUDE_PATHS)
 				.excludePathPatterns(EXCLUDE_PATHS);
 	}
@@ -39,7 +46,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		resolver.setSuffix(".html");
 		return resolver;
 	}
-
+	
+	/**
+	 * 히든 메소드 필터 활성화
+	 * @return
+	 */
 	@Bean
 	@ConditionalOnProperty(prefix = "spring.mvc.hiddenmethod.filter", name = "enabled", matchIfMissing = true)
 	public OrderedHiddenHttpMethodFilter hiddenHttpMethodFilter() {

@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @Slf4j
-@Component
+@Component(value = "AuthInterceptor")
 public class AuthInterceptor implements HandlerInterceptor {
 
 	private static final String ADMIN_URL = "/admin";

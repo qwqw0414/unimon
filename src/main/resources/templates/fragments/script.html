@@ -8,7 +8,21 @@ const $cont = $("div#wrapper div#content-wrapper div#content");
 
 $(()=>{
 
-    
+    $("#logoutBtn").on("click", ()=>{
+
+        $.ajax({
+            url : '/api/user/signout',
+            type : 'post',
+            success : ()=>{
+                location.replace("/");
+            },
+            error : (e)=>{
+                msgModal("Error Message", "로그아웃 실패");
+            }
+
+        });
+
+    });
 
 
 });

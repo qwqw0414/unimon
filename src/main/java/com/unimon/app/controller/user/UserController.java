@@ -42,17 +42,4 @@ public class UserController {
 	public String signinView() throws Exception {
 		return "user/signin";
 	}
-
-	/**
-	 * 로그아웃 처리
-	 */
-	@RequestMapping(value = "/signout", method = RequestMethod.GET)
-	public String signout(HttpSession session) throws Exception {
-		
-		sessionComp.remove(session);
-		
-		session.removeAttribute("account");
-		session.invalidate();
-		return "common/main";
-	}
 }

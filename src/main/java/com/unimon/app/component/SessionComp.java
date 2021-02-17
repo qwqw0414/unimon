@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Component
+@Component(value = "SessionComp")
 public class SessionComp {
 
 	private static final Map<String, HttpSession> sessionList = new HashMap<>();
@@ -35,7 +35,7 @@ public class SessionComp {
 		return sessionList.remove(session.getId()) != null;
 	}
 
-	public boolean isVaild(HttpSession session) {
+	public boolean isVaild(HttpSession session) throws Exception {
 		return sessionList.containsKey(session.getId());
 	}
 	
