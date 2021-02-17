@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.unimon.app.common.exception.AppException;
-import com.unimon.app.component.PropComp;
+import com.unimon.app.component.RandomComp;
 import com.unimon.app.service.poke.PokeService;
 import com.unimon.app.vo.Pagination;
 import com.unimon.app.vo.PickPoint;
@@ -32,7 +32,7 @@ public class PokeRestController {
 	private Gson gson = new Gson();
 	
 	@Autowired
-	private PropComp propComp;
+	private RandomComp randomComp;
 	
 	@Autowired
 	private PokeService pokeService;
@@ -89,13 +89,14 @@ public class PokeRestController {
 		param.put("type", type);
 		param.put("amount", amount);
 		
+//		확률 테이블 조회
 		List<PickPoint> pointList = pokeService.getPickList(type);
 		
 		if(amount < 1)
 			throw new AppException("Invalid Value : amount < 1");
 		
 		
-		List<String> pickList = propComp.get(pointList, amount);
+		List<String> pickList = randomComp.get(pointList, amount);
 		String[] rareArr = {"R1", "R2", "R3", "R4"};
 
 		Map<String, List<Map<String, Object>>> pokeList = new HashMap<>();
@@ -111,7 +112,7 @@ public class PokeRestController {
 		List<Map<String, Object>> result = new ArrayList<>();
 		
 		for(String rare : pickList) {
-			result.add(propComp.getPoke(pokeList.get(rare)));
+			result.add(randomComp.getList(pokeList.get(rare)));
 		}
 		
 		return gson.toJson(result);

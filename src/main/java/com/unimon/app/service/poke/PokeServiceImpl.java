@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.unimon.app.common.exception.AppException;
+import com.unimon.app.component.CashDataComp;
 import com.unimon.app.dao.poke.PokeDao;
 import com.unimon.app.dao.poke.PokeDaoImpl;
 import com.unimon.app.vo.PickPoint;
@@ -22,6 +23,9 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class, Throwable.class })
 public class PokeServiceImpl implements PokeService {
 
+	@Autowired
+	private CashDataComp cdc;
+	
 	private static Map<String, List<Map<String, Object>>> pokeRareMap = new HashMap<>();
 
 	@Autowired
@@ -40,7 +44,10 @@ public class PokeServiceImpl implements PokeService {
 	@Override
 	public List<PickPoint> getPickList(String code) throws RuntimeException {
 
-		List<PickPoint> result = pokeDao.selectAllPickPointByCode(code);
+		if(!cdc.containsKey(code))
+			cdc.set(code, pokeDao.selectAllPickPointByCode(code));
+		
+		List<PickPoint> result = (List<PickPoint>)cdc.getObject(code);
 
 		if (result == null)
 			throw new AppException("Not Found Picklist");
@@ -51,11 +58,15 @@ public class PokeServiceImpl implements PokeService {
 	@Override
 	public List<Map<String, Object>> getListPokeByRare(String rare) throws RuntimeException {
 		
-		if (!pokeRareMap.containsKey(rare)) {
-			pokeRareMap.put(rare, pokeDao.selectListPokeByRare(rare));
+		if(!cdc.containsKey(rare)) {
+			cdc.set(rare, pokeDao.selectListPokeByRare(rare));
 		}
 		
-		return pokeRareMap.get(rare);
+//		if (!pokeRareMap.containsKey(rare)) {
+//			pokeRareMap.put(rare, pokeDao.selectListPokeByRare(rare));
+//		}
+		
+		return cdc.getList(rare);
 	}
 
 }

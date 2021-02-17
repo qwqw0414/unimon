@@ -21,8 +21,18 @@ public interface PokeDao {
 	 */
 	List<Map<String, Object>> searchPokeByKeyword(Map<String, Object> param);
 
+	/**
+	 * 
+	 * @param code
+	 * @return
+	 */
 	List<PickPoint> selectAllPickPointByCode(String code);
 
+	/**
+	 * 
+	 * @param rare
+	 * @return
+	 */
 	List<Map<String, Object>> selectListPokeByRare(String rare);
 
 }

@@ -16,6 +16,11 @@ import com.unimon.app.vo.Account;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 세션 관리 인터셉터
+ * @author jang
+ *
+ */
 @Slf4j
 @Component(value = "SessionInterceptor")
 public class SessionInterceptor implements HandlerInterceptor {
