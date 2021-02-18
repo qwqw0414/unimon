@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/default">
+
+<style layout:fragment="style">
+/* CSS Start !! */
+
+</style>
+
+<div layout:fragment="content" class="container-fluid">
+<!-- HTML Start !! -->
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Chat</h1>
+        <a th:href="@{/404}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
+        </a>
+    </div>
+
+    <button class="btn btn-primary" id="sendBtn">테스트</button>
+
+    <div id="chatList">
+
+    </div>
+
+</div>
+
+<script layout:fragment="script">
+// JS Start !!
+$(()=>{
+
+    const $sendBtn = $cont.find("button#sendBtn");
+    const $chatList = $cont.find("div#chatList");
+
+    let connectId = 'a123';
+    let stompClient = null;
+
+    // 이벤트 리스너
+    $sendBtn.on('click', ()=>{
+        sendMessage();
+    })
+
+    // 웹소켓 함수 정의
+    function connect() {
+        var socket = new SockJS('/ws');
+        stompClient = Stomp.over(socket);
+
+        stompClient.connect({}, onConnected, onError);
+    }
+    
+    function onConnected() {
+        stompClient.subscribe('/sub/' + connectId , onMessageReceived);
+    }
+    
+    function sendMessage() {
+        var param = {
+            msg: "123"
+        };
+
+        if (stompClient) {
+            stompClient.send("/send/" + connectId, {}, JSON.stringify(param));
+        }
+    }
+
+    function onMessageReceived(data) {
+        console.log("result", data.body);
+        $chatList.append(data.body);
+    }
+
+    function onError(error) {
+        console.log(error);
+    }
+
+    connect();
+});
+</script>
+
+</html>

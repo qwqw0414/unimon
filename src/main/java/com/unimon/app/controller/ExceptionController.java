@@ -30,7 +30,8 @@ public class ExceptionController {
 		request.setAttribute("errorCode", "400");
 		request.setAttribute("errorStatus", HttpStatus.BAD_REQUEST);
 		log.error(e.getMessage());
-
+		log.error("Context Path : {}", request.getContextPath());
+		
 		return HttpStatus.BAD_REQUEST;
 	}
 
