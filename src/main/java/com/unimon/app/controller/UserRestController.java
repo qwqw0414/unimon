@@ -85,6 +85,9 @@ public class UserRestController {
 		if (!passwordEncoder.matches(param.getPassword(), user.getPassword()))
 			throw new AppException("Invalid Password");
 
+//		비밀번호 필터
+		user.setPassword("password");
+		
 //		세션 데이터 저장
 		session.setAttribute("account", user);
 		sessionComp.set(session);

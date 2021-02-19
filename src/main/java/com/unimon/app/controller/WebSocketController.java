@@ -18,13 +18,15 @@ public class WebSocketController {
 
 	private Gson gson = new Gson();
 	
+	
 	@RequestMapping("/ws/public")
 	public String chatView() {
 		return "ws/public";
 	}
 	
-	@MessageMapping("/{id}")
-	@SendTo("/sub/{id}")
+	
+	@MessageMapping("/public")
+	@SendTo("/sub/public")
 	public String wsTest(@RequestBody String jsonData , 
 						 @DestinationVariable("id") String id) {
 		
